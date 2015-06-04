@@ -1,0 +1,52 @@
+/**
+*
+* Directive:th-card-tequila
+*
+**/
+.type-list
+{
+  display: table;
+
+  width: 100%;
+  margin: 4em 0 0 0;
+
+  text-align: center;
+  > li
+  {
+    display: table-cell;
+
+    vertical-align: middle;
+  }
+}
+.tq-card
+{
+  @include element('panel')
+  {
+    display: inline-block;
+
+    padding: 1em;
+
+    cursor: pointer;
+    transition: transform 150ms ease-in-out;
+
+    border: 1px solid transparent;
+    &:hover
+    {
+      transform: scale(1.10);
+      h2
+      {
+        color: color('gold');
+      }
+    }
+  }
+  @include element('name')
+  {
+    font-size: 14px;
+    font-weight: normal;
+
+    margin: 0;
+
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+}

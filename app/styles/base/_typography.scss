@@ -1,0 +1,12 @@
+$sans_stack : 'Open Sans', sans-serif;
+$serif_stack : 'Lora', serif;
+
+#{headings(1,6)} {
+  font-family: $serif-stack;
+  color: color('gray');
+}
+p, li, span , a {
+	font-family: $serif-stack;
+	line-height: 24px;
+	color: color('gray');
+}

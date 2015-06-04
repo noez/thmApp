@@ -1,0 +1,36 @@
+@mixin element($element) {
+  &__#{$element} {
+    @content;
+  }
+}
+
+@mixin modifier($modifier) {
+  &--#{$modifier} {
+    @content;
+  }
+}
+
+@mixin title-upper($color, $weight, $size) {
+  text-transform: uppercase;
+  color: $color;
+  letter-spacing: 0.10em;
+  font-weight: $weight ;
+  font-size: $size;
+  line-height: $size * 1.5;
+  margin: 0;
+}
+
+@mixin btn($bgcolor, $brw, $brc) {
+  display: inline-block;
+  background: $bgcolor;
+  border: $brw solid $brc;
+  padding: 0.5em 3em;
+  margin: 1em 0;
+  cursor: pointer;
+  transition : all 2ms ease-in-out;
+  &:hover {
+    background-color: darken($brc, 5%);
+    color: white;
+    text-decoration: none;
+  }
+}

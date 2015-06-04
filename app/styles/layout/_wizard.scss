@@ -1,0 +1,114 @@
+.wizard
+{
+  display: block;
+
+  width: 600px;
+  margin: 0 auto;
+
+  text-align: center;
+
+  @include element('step')
+  {
+    display: inline-block;
+
+    padding: 0 1.25em;
+
+    text-align: center;
+    vertical-align: middle;
+
+    opacity: .35;
+
+    @include modifier('active')
+    {
+      opacity: 1;
+    }
+  }
+}
+
+.step
+{
+  font-family: $serif-stack;
+
+  cursor: pointer ;
+  user-select: none;
+  text-align: center;
+
+  @include element('dot')
+  {
+    font-size: 10px;
+    line-height: 24px;
+
+    display: inline-block;
+
+    width: 24px;
+    height: 24px;
+    margin: 0 auto;
+
+    text-align: center;
+
+    color: color('white');
+    border-radius: 50%;
+    background-color: color('gold');
+  }
+  @include element('label')
+  {
+    font-size: 11px;
+    font-weight: 300;
+
+    display: inline-block;
+
+    width: 100%;
+    margin-top: .25em;
+
+    letter-spacing: .1em;
+    text-transform: uppercase;
+
+    color: color('gray');
+  }
+}
+
+.tl-step
+{
+    font-size: 12px;
+    font-weight: normal;
+
+    position: relative;
+
+    display: inline-block;
+
+    width: 100%;
+    margin: 0;
+    padding: 1em 0;
+
+    text-align: center;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+
+    background:color('gold');
+    color: white;
+    border-bottom: 1px solid color('white','shade');
+    &:after
+    {
+        position: absolute;
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+
+        display: block;
+
+        width: 10px;
+        height: 10px;
+        margin-left: -10px;
+
+        content: '';
+        content: '';
+        transform: rotate(45deg);
+
+        /* border: 1px solid color('white','shade');
+        border-top-color: transparent;
+        border-left-color: transparent; */
+        background: color('gold');
+    }
+}
+
+

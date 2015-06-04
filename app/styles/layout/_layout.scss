@@ -1,0 +1,53 @@
+body,
+html {
+  height: 100%;
+}
+
+.wrapper {
+  height: auto;
+  min-height:100%;
+  margin: 0;
+  padding: 0;
+}
+
+.layout
+{
+  position: absolute;
+  z-index: 10;
+  left: 50px;
+
+  width: calc(100% - 50px);
+  height: 100% !important;
+
+  @include element ('header')
+  {
+    position: relative;
+
+    padding: 1em 0;
+
+    border-bottom: 1px solid color('white','shade');
+  }
+  @include element ('body')
+  {
+    position: relative;
+
+    height: 100%;
+  }
+  @include element('col')
+  {
+    position: relative;
+
+    float: left;
+
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    padding: 1em;
+
+    @include modifier('left')
+    {
+      border-right: 1px solid color('white','shade');
+    }
+  }
+}
+

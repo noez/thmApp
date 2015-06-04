@@ -1,0 +1,17 @@
+// Responsive formula target / context = result
+@function cp($target, $container){
+  @return ($target / $container) * 100%;
+}
+
+// get color base in a map color scheme
+@function color($color-name, $tone: base) {
+  @return map_get(map_get($colors, $color-name), $tone);
+}
+
+@function headings($from:1, $to:6) {
+    @if $from == $to {
+        @return 'h#{$from}';
+    } @else {
+        @return 'h#{$from},' + headings($from+1, $to);
+    }
+}
