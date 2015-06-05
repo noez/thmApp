@@ -2,8 +2,8 @@
 <header class="layout__header">
   <nav class="nav-steps">
     <ul class="list-unstyled wizard">
-      <li class="wizard__step"ng-repeat="step in steps">
-      <th-wizard-step step="step" step-valid="step.valid" step-ref="wizard.{{ step.url }}" ></th-wizard-step>
+      <li class="wizard__step"ng-repeat="step in $storage.steps">
+      <th-wizard-step step="step" step-valid="step.valid" step-ref="wizard.{{ step.ref }}" ></th-wizard-step>
       </li>
     </ul>
   </nav>

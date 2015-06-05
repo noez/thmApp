@@ -1,3 +1,70 @@
-<div>
-  <h3 class="tl-step">Determine el tamaño de su botella</h3>
+<!-- Layout Body -->
+<div class="layout__body">
+  <h1 class="layout__title">
+    Determine el tamaño de su botella
+  </h1>
+  <div class="layout__col layout__col--left">
+    <div class="type">
+      <div class="type__body">
+        <figure>
+          <img ng-src="{{ product.img_zoom_size }}" height="580">
+        </figure>
+      </div>
+      <div class="type__footer">
+        <a href="" class="type__name"><h2>{{ vm.types[0].name}}</h2></a>
+      </div>
+    </div>
+  </div>
+  <div class="layout__col">
+    <div class="version">
+      <div class="version__size">
+        <form class="version__form">
+          <label for="">Presentación</label>
+          <select ng-model="product"
+                  ng-options="product as product.bottlesize for product in products | orderBy:'id'"
+                  class="form-control">
+            <option value="">Determine el tamaño de su botella</option>
+          </select>
+
+          <div ng-show="product.id" class="product__rules">
+            <hr>
+            <table  class="table table-bordered version__table">
+              <thead>
+                <tr>
+                  <th>Botellas por caja</th>
+                  <th>Etiquetas personalizables por caja</th>
+                  <th>Precio por caja</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ product.bottles }}</td>
+                  <td>{{ product.maxlabels }}</td>
+                  <td>$ {{ productPrice.price_excl_tax }} {{ productPrice.price_currency }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr/>
+          <div class="row clearfix">
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label class="form-item-label">Número de Cajas</label>
+                <input type="text" class="form-control form-item-control" ng-model="qty" name="box"/>
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label for="price_total">Precio Total</label>
+                <input type="text" class="form-control" ng-model="totalPrice">
+              </div>
+            </div>
+          </div>
+          <div class="clearfix">
+            <a class="btn btn-primary" ng-click="saveOrder()">Siguiente</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
