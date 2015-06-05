@@ -2,11 +2,8 @@
 <header class="layout__header">
   <nav class="nav-steps">
     <ul class="list-unstyled wizard">
-      <li class="wizard__step"ng-repeat="step in steps" ui-sref-active="wizard__step--active">
-        <a ui-sref="wizard.{{ step.url }}" class="step">
-        <span class="step__dot">{{ step.id }}</span>
-        <span class="span step__label">{{ step.label }}</span>
-        </a>
+      <li class="wizard__step"ng-repeat="step in steps">
+      <th-wizard-step step="step" step-valid="step.valid" step-ref="wizard.{{ step.url }}" ></th-wizard-step>
       </li>
     </ul>
   </nav>
@@ -15,3 +12,4 @@
 <div class="layout__body" ui-view>
 
 </div>
+

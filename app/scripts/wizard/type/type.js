@@ -14,10 +14,15 @@ angular.module('app.wizard.type',[])
       });
     $urlRouterProvider.otherwise('/');
   }])
-
-   .controller('TypeCtrl', ['$scope','Types', function($scope, Types){
+   .controller('TypeCtrl', ['$scope','$sessionStorage','Types', function($scope, $sessionStorage, Types){
+      // defines a empty collection
       $scope.types = [];
+      $scope.typeSelected = {};
 
+      // bind sessionStorage to a model
+      $scope.$storage = $sessionStorage;
+
+      // fetch and populate the types collection
       Types
         .getAll()
         .then(function(data){
@@ -26,5 +31,13 @@ angular.module('app.wizard.type',[])
         .catch(function(err){
           console.log('error' + err);
         });
+
+      // assigns the selected tequila
+      $scope.selected = function(type) {
+        // when tequila is chosen, you must be assigned.
+        $scope.typeSelected = type;
+        //
+      };
+
    }])
   ;

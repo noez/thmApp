@@ -7,5 +7,6 @@
 */
 angular.module('app.core', [
   'ui.router',
-  'ngSanitize'
+  'ngSanitize',
+  'ngStorage'
 ]);

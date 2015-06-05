@@ -20,7 +20,7 @@ angular.module('app.wizard', ['app.wizard.type','app.wizard.order'])
       id: 1,
       url: 'type',
       label: 'Tequila',
-      valid: false
+      valid: true
     }, {
       id: 2,
       url: 'order',

@@ -16,12 +16,6 @@
     text-align: center;
     vertical-align: middle;
 
-    opacity: .35;
-
-    @include modifier('active')
-    {
-      opacity: 1;
-    }
   }
 }
 
@@ -32,6 +26,10 @@
   cursor: pointer ;
   user-select: none;
   text-align: center;
+  opacity: .35;
+  &.active {
+    opacity: 1;
+  }
 
   @include element('dot')
   {
