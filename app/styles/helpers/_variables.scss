@@ -20,3 +20,16 @@ $colors: (
     shade: #EBEBEB
   )
 );
+
+$font-stack :(
+  'sans ' :(
+    regular : 'azo_sansregular',
+    italic : 'azo_sansitalic',
+    bold : 'azo_sansbold'
+  ),
+  'serif' : (
+    regular : 'Playfair Display'
+  )
+);
+
+

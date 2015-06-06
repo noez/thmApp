@@ -1,12 +1,26 @@
+@include font-face("azo_sansbold", font-files("azosans-bold-webfont.eot", "azosans-bold-webfont.eot?#iefix","azosans-bold-webfont.woff2","azosans-bold-webfont.woff","azosans-bold-webfont.ttf","azosans-bold-webfont.svg#azo_sansbold"));
+
+@include font-face("azo_sansitalic", font-files("azosans-italic-webfont.eot", "azosans-italic-webfont.eot?#iefix","azosans-italic-webfont.woff2","azosans-italic-webfont.woff","azosans-italic-webfont.ttf","azosans-italic-webfont.svg#azo_sansitalic"));
+
+@include font-face("azo_sansregular", font-files("azosans-regular-webfont.eot", "azosans-regular-webfont.eot?#iefix","azosans-regular-webfont.woff2","azosans-regular-webfont.woff","azosans-regular-webfont.ttf","azosans-regular-webfont.svg#azo_sansregular"));
+
+@include font-face("playfair_displaybold", font-files("playfairdisplay-bold-webfont.eot", "playfairdisplay-bold-webfont.eot?#iefix","playfairdisplay-bold-webfont.woff2","playfairdisplay-bold-webfont.woff","playfairdisplay-bold-webfontt.ttf","playfairdisplay-bold-webfont.svg#playfair_displaybold"));
+
+@include font-face("playfair_displayitalic", font-files("playfairdisplay-italic-webfont.eot", "playfairdisplay-italic-webfont.eot?#iefix","playfairdisplay-italic-webfont.woff2","playfairdisplay-italic-webfont.woff","playfairdisplay-italic-webfontt.ttf","playfairdisplay-italic-webfont.svg#playfair_displayitalic"));
+
+@include font-face("playfair_displayregular", font-files("playfairdisplay-regular-webfont.eot", "playfairdisplay-regular-webfont.eot?#iefix","playfairdisplay-regular-webfont.woff2","playfairdisplay-regular-webfont.woff","playfairdisplay-regular-webfontt.ttf","playfairdisplay-regular-webfont.svg#playfair_displayregular"));
+
 $sans_stack : 'Open Sans', sans-serif;
 $serif_stack : 'Lora', serif;
 
-#{headings(1,6)} {
+/* #{headings(1,6)} {
   font-family: $serif-stack;
+  font-weight: bold;
   color: color('gray');
 }
 p, li, span , a {
-	font-family: $serif-stack;
+	font-family: $sans-stack;
 	line-height: 24px;
+  font-weight: 100;
 	color: color('gray');
-}
+} */

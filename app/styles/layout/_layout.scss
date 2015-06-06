@@ -3,6 +3,19 @@ html
 {
   height: 100%;
 }
+.browsehappy
+{
+  margin: .2em 0;
+  padding: .2em 0;
+
+  color: #000;
+  background: #ccc;
+}
+
+body
+{
+  padding: 0;
+}
 
 .wrapper
 {
@@ -63,36 +76,31 @@ html
       margin-left: -10px;
 
       content: '';
-      content: '';
-      -webkit-transform: rotate(45deg);
       transform: rotate(45deg);
-            /* border: 1px solid color('white','shade');
-        border-top-color: transparent;
-        border-left-color: transparent; */
 
-        background: #a6833c;
-      }
-    }
-    @include element ('body')
-    {
-      position: relative;
-
-      height: 100%;
-    }
-    @include element('col')
-    {
-      position: relative;
-
-      float: left;
-
-      box-sizing: border-box;
-      width: 50%;
-      height: 100%;
-      padding: 1em;
-
-      @include modifier('left')
-      {
-        border-right: 1px solid color('white','shade');
-      }
+      background: #a6833c;
     }
   }
+  @include element ('body')
+  {
+    position: relative;
+
+    height: 100%;
+  }
+  @include element('col')
+  {
+    position: relative;
+
+    float: left;
+
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    padding: 1em;
+
+    @include modifier('left')
+    {
+      border-right: 1px solid color('white','shade');
+    }
+  }
+}
