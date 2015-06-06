@@ -6,6 +6,7 @@
  */
 angular
   .module('app.wizard.order', [])
+
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('wizard.order', {
@@ -15,17 +16,19 @@ angular
       });
     $urlRouterProvider.otherwise('/');
   }])
+
   .controller('OrderCtrl', ['$scope', '$sessionStorage', 'Products', 'Price', function($scope, $sessionStorage, Products, Price) {
 
     var defaultQty = 1;
 
+    // initialize models
     $scope.$storage = $sessionStorage;
-
     $scope.products = [];
     $scope.product = {};
     $scope.qty = ( _.has($scope.$storage.order, 'qty')) ? $scope.$storage.order.qty : defaultQty;
 
     $scope.isValid = false;
+
     // fetch and populate the products collection
     Products
       .getAll($scope.$storage.data.typeId)
@@ -42,13 +45,14 @@ angular
         console.log('error' + err);
       });
 
-    // see if the product model change
+    // llistening changes , product model
     $scope.$watch('product', function(product) {
+
+      // validate product value
       if (!_.isEmpty(product)) {
-        // get the product id
-        var productId = product.id;
+        // fetch the price of the selected product
         Price
-          .get(productId)
+          .get(product.id)
           .then(function(data) {
             $scope.productPrice = data[0];
           })
@@ -68,10 +72,12 @@ angular
       if (!_.isNull($scope.product.id) && !_.isUndefined($scope.product.id)) {
         $scope.$storage.order.productId = $scope.product.id;
         $scope.$storage.order.qty = $scope.qty;
+
         $scope.$storage.order.price =  {
           value : $scope.productPrice.price_excl_tax,
           currency : $scope.productPrice.price_currency
         };
+
         $scope.isValid = true;
       }else {
         $scope.isValid = false;

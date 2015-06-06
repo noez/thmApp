@@ -5,10 +5,12 @@
 * Description
 * Wizard module for application.
 */
-angular.module('app.wizard', [
-  'app.wizard.type',
-  'app.wizard.order',
-  'app.wizard.event'])
+angular
+  .module('app.wizard', [
+    'app.wizard.type',
+    'app.wizard.order',
+    'app.wizard.event'])
+
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('wizard',{
@@ -18,13 +20,13 @@ angular.module('app.wizard', [
       });
     $urlRouterProvider.otherwise('/wizard/type');
   }])
+
   .controller('WizardCtrl', ['$scope', '$rootScope','$state', '$sessionStorage', function($scope, $rootScope,$state, $sessionStorage){
 
     $scope.$storage = $sessionStorage;
 
-    // steps defaults
-    var
-      defaultSteps = [{
+    // default steps
+    var defaultSteps = [{
       id: 1,
       ref: 'type',
       label: 'Tequila',
@@ -50,37 +52,41 @@ angular.module('app.wizard', [
       label: 'Resumen',
       valid: false
     }],
+
+    // ui-sref prefix
     prefix = 'wizard.';
 
-
+    // validate if steps in session exists
     if(_.isNull($scope.$storage.steps) || _.isUndefined($scope.$storage.steps)){
       $scope.$storage.steps = defaultSteps;
     }
 
+    // listen for changes in the ui router states
     $rootScope.$on('$stateChangeStart', function(event, toState){
-      var
-        stateRef = toState.name.split('.')[1],
-        indexState = _.findIndex($scope.$storage.steps, function (step) {
+      // get the ref from to ui router state
+      var stateRef = toState.name.split('.')[1];
+
+      // finds the index of the state
+      var indexState = _.findIndex($scope.$storage.steps, function (step) {
         return step.ref === stateRef;
       });
 
+      // blocks the states whose indices are less than the index found
       _.forEach($scope.$storage.steps, function(n, key) {
         if(indexState < key) {
           n.valid = false;
         }
       });
-
     });
 
-
+    // listen for changes in the steps
     $scope.$on('stepChange', function(event, step ){
       if(step.isValid) {
-        // setear el step.index a $storage.stepIndex
+        // enable next step in the process
         $scope.$storage.steps[step.index + 1].valid = true;
-        console.log(prefix + $scope.$storage.steps[step.index + 1].ref);
+        // go to the next step in the process
         $state.go(prefix + $scope.$storage.steps[step.index + 1].ref);
       }
     });
 
-  }])
-  ;
+  }]);

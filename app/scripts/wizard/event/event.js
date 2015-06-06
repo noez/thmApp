@@ -6,6 +6,7 @@
  */
 angular
   .module('app.wizard.event', [])
+
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('wizard.event', {
