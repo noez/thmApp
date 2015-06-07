@@ -121,4 +121,32 @@ angular
   };
 }])
 
+/**
+ * @ngdoc service
+ * @name Template
+ * @description
+ * # Template
+ * Service in the app.services
+ */
+.factory('Template', ['$http', '$q', 'baseUrl', function($http, $q, baseUrl) {
+  // Public API here
+  return {
+    get: function(eventId) {
+      var defered = $q.defer(),
+        promise = defered.promise,
+        fragmentUrl = '/templates/';
+
+      $http.get(baseUrl + 'events/' + eventId + fragmentUrl)
+        .success(function(data) {
+          defered.resolve(data);
+        })
+        .error(function(err) {
+          defered.reject(err);
+        });
+
+      return promise;
+    }
+  };
+}])
+
 ;

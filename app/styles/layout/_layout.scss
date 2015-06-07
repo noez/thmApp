@@ -102,5 +102,11 @@ body
     {
       border-right: 1px solid color('white','shade');
     }
+     @include modifier('wide')
+    {
+      float : none;
+      width: 100%;
+      border-right: 1px solid color('white','shade');
+    }
   }
 }

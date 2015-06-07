@@ -45,6 +45,7 @@ angular.module('app.wizard.type', [])
 
     // when tequila is chosen, you must be assigned.
     $scope.selected = function(type) {
+      console.log(type);
       // assigns the selected tequila
       $scope.typeSelected = type;
       $scope.typeId = type.id;

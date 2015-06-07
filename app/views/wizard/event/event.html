@@ -1,2 +1,35 @@
-<h1>Como se me antoja un yogurth</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum fugit provident consequatur tempore aut, natus, minus, incidunt perspiciatis dolores voluptate ut eaque blanditiis amet facere ducimus iste fuga ipsa eligendi.</p>
+<div class="layout__body">
+  <h1 class="layout__title">
+    Algo de los eventos va aqui
+  </h1>
+  <div class="layout__col layout__col--wide layout__col--header">
+    <div class="events">
+      <form action="">
+        <div class="form-group">
+          <label for="event_type">Algo</label>
+          <select name="event_type" id="event_type"
+            ng-options="event as event.name for event in events | orderBy:'name'"
+            ng-model="event"
+            ng-change="getTemplates(event.id)"
+            class="form-control">
+            <option value="">Determine el tamaño de su botella</option>
+          </select>
+        </div>
+      </form>
+    </div>
+
+  <div class="templates">
+    <th-carousel th-source="templates" th-instance="carousel"></th-carousel>
+  </div>
+
+</div>
+
+<!-- <div class="layout__col layout__col--wide layout__col--body">
+  <div class="templates" ng-show="templaes.length > 0">
+    <th-carousel source="templates"></th-carousel>
+  </div>
+</div> -->
+
+</div>
+
+
