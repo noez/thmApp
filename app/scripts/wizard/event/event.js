@@ -16,14 +16,13 @@ angular
       });
     $urlRouterProvider.otherwise('/');
   }])
-  .controller('EventCtrl', ['$scope','Event', 'Template', function($scope, Event, Template){
+  .controller('EventCtrl', ['$scope', '$sessionStorage','Event', 'Template', function($scope, $sessionStorage, Event, Template){
+    $scope.$storage = $sessionStorage;
     $scope.events = [];
-
     $scope.templates = [];
+    $scope.isValid = true;
 
-    $scope.carousel = {};
-
-    //$scope.template = {};
+    $scope.carousel;
 
     Event
       .get()
@@ -47,12 +46,26 @@ angular
         });
     };
 
-    $scope.evtSaluda = function (msg) {
-      console.log(msg);
+    var labelsLen = $scope.$storage.order.labels.length,
+        currentIndex = $scope.$storage.order.cycle.index;
+
+    if (currentIndex === labelsLen) {
+      $scope.$storage.order.labels.pop();
+    }
+
+    $scope.chooseTemplate = function (template) {
+      var round = {
+        template : template,
+        uploadImage : null,
+        render : null,
+        headlines: []
+      };
+
+      $scope.$storage.order.labels.push(round);
+      $scope.$emit('stepChange', {
+        index : 2,
+        isValid : $scope.isValid
+      });
     };
 
-    // when templare is selected must be assigned
-    $scope.onSelectTemplate = function (tpl) {
-      console.log(tpl );
-    };
   }]);

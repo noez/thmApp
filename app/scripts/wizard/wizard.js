@@ -9,7 +9,8 @@ angular
   .module('app.wizard', [
     'app.wizard.type',
     'app.wizard.order',
-    'app.wizard.event'])
+    'app.wizard.event',
+    'app.wizard.design'])
 
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider

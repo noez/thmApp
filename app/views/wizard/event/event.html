@@ -7,29 +7,38 @@
       <form action="">
         <div class="form-group">
           <label for="event_type">Algo</label>
-          <select name="event_type" id="event_type"
-            ng-options="event as event.name for event in events | orderBy:'name'"
-            ng-model="event"
-            ng-change="getTemplates(event.id)"
-            class="form-control">
+          <select name="event_type" id="event_type" ng-options="event as event.name for event in events | orderBy:'name'" ng-model="event" ng-change="getTemplates(event.id)" class="form-control">
             <option value="">Determine el tamaño de su botella</option>
           </select>
         </div>
       </form>
     </div>
 
-  <div class="templates">
-    <th-carousel th-source="templates" th-instance="carousel"></th-carousel>
+    <div class="templates" ng-show="templates.length > 0">
+      <div th-carousel="carousel" th-source="templates" class="jcarousel-wrapper">
+        <div class="jcarousel">
+          <ul>
+            <li ng-repeat="template in templates" ng-model="template">
+              <a ng-click="chooseTemplate(template)">
+                <img ng-src="{{template.timage}}" alt=""/>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="jcarousel-controls">
+          <button class="cta-btn" ng-click="carousel.prev()">Less</button>
+          <button class="cta-btn" ng-click="carousel.next()">More</button>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
-</div>
-
-<!-- <div class="layout__col layout__col--wide layout__col--body">
+  <!-- <div class="layout__col layout__col--wide layout__col--body">
   <div class="templates" ng-show="templaes.length > 0">
     <th-carousel source="templates"></th-carousel>
   </div>
 </div> -->
 
 </div>
-
-

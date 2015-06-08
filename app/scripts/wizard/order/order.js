@@ -73,12 +73,20 @@ angular
         $scope.$storage.order.productId = $scope.product.id;
         $scope.$storage.order.qty = $scope.qty;
 
+        // create the cyclye
+        $scope.$storage.order.cycle = {
+          index: 1,
+          length : $scope.qty * $scope.product.maxlabels
+        };
+
+        $scope.$storage.order.labels = [];
+
         $scope.$storage.order.price =  {
           value : $scope.productPrice.price_excl_tax,
           currency : $scope.productPrice.price_currency
         };
 
-        $scope.isValid = true;
+      $scope.isValid = true;
       }else {
         $scope.isValid = false;
       }
@@ -89,7 +97,4 @@ angular
       });
 
     };
-
-
-
   }]);

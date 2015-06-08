@@ -68,65 +68,53 @@ angular.module('app.blocks', [])
 }])
 
 .directive('thCarousel', ['$timeout', function($timeout) {
-  var puto = null;
-
+  var carousel = null;
   return {
-    restrict: 'E',
+    restrict: 'A',
     scope: {
       source: '=thSource'
     },
-    transclude: true,
-    template: [
-      '<div class="jcarousel">',
-      '<ul>',
-      '<li ng-repeat="item in source" class="tq-carousel-item" ng-click="clickTemplate(item);">',
-      '<img ng-src="{{ item.timage }}"/>',
-      '</li>',
-      '</ul>',
-      '</div>',
-      '<div class="jcarousel-controls">',
-      '<button ng-click="carouselPrev()">Prev</button>',
-      '<button ng-click="carouselNext()">Next</button>',
-      '</div>'
-    ].join(''),
+    link: function(scope, element, attrs) {
+      var isInitialized = false;
+      carousel = element.children('.jcarousel');
 
-    link: function(scope, element) {
-      var isInitialized = false,
-        carousel = element.children('.jcarousel');
-
-      scope.clickTemplate = function (item) {
-        console.log(item);
-      };
-
-      puto = {
-        click : scope.clickTemplate
-      };
-
-      scope.$watch('source', function(newVal) {
+      scope.$watch('source', function (newVal) {
         if (isInitialized) {
           carousel.jcarousel('reload');
-        }
-        if (!_.isEmpty(newVal)) {
-          $timeout(function() {
+        }else if (! _.isEmpty(newVal)) {
+          $timeout(function(){
             carousel.jcarousel({});
           }, 0);
           isInitialized = true;
         }
       });
+    },
 
-      scope.carouselPrev = function() {
-        carousel.jcarousel('scroll', '-=1');
-      };
+    controller: ['$scope','$attrs', function ($scope, $attrs) {
 
-      scope.carouselNext = function() {
+      if($attrs.thCarousel) {$scope.$parent[$attrs.thCarousel] = this}
+
+      this.next = function () {
         carousel.jcarousel('scroll', '+=1');
       };
-    },
-    controller : ['$scope', '$attrs',  function ($scope, $attrs) {
-      /*if ($attrs.thInstance) {
-        $scope.$parent[$attrs.thInstance] = this;
-      }*/
-      console.log(puto);
+
+      this.prev = function () {
+        carousel.jcarousel('scroll', '-=1');
+      };
     }]
+  };
+}])
+
+.directive('thFileInput', ['$parse', function($parse){
+  // Runs during compile
+  return {
+    restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+    link: function(scope, element, attrs) {
+      element.bind('change', function(){
+        $parse(attrs.thFileInput)
+          .assign(scope, element[0].files);
+          scope.$apply();
+      });
+    }
   };
 }]);

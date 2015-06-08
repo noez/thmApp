@@ -8,7 +8,7 @@
 angular
   .module('app.services', [])
   .constant('baseUrl', 'http://maravatio.haushaus.mx/dashboard/api/')
-
+  .constant('token', 'Token 61e7de5eae825fe98dbb8e1ad714a97d4fc090f8')
 /**
  * @ngdoc service
  * @name Types
@@ -53,6 +53,21 @@ angular
         fragmentUrl = '/products/';
 
       $http.get(baseUrl + 'types/' + typeId + fragmentUrl)
+        .success(function(data) {
+          defered.resolve(data);
+        })
+        .error(function(err) {
+          defered.reject(err);
+        });
+
+      return promise;
+    },
+    getById : function(productId) {
+      var defered = $q.defer(),
+        promise = defered.promise,
+        fragmentUrl = 'products/';
+
+      $http.get(baseUrl + fragmentUrl + productId)
         .success(function(data) {
           defered.resolve(data);
         })
@@ -149,4 +164,38 @@ angular
   };
 }])
 
+/**
+ * @ngdoc service
+ * @name UploadImage
+ * @description
+ * # UploadImage
+ * Service in the app.services
+ */
+.factory('UploadImage', ['$http', '$q', 'baseUrl','token', function($http, $q, baseUrl, token) {
+  // Public API here
+  return {
+    file: function(fd) {
+      var defered = $q.defer(),
+        promise = defered.promise,
+        fragmentUrl = 'uploadimages/';
+
+      $http
+        .post(baseUrl + fragmentUrl, fd, {
+          headers: {
+            'Content-Type': undefined,
+            'Authorization': token
+          },
+          transformRequest: angular.identify
+        })
+        .success(function(data) {
+          defered.resolve(data);
+        })
+        .error(function(err) {
+          defered.reject(err);
+        });
+
+      return promise;
+    }
+  };
+}])
 ;
