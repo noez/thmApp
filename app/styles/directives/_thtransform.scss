@@ -1,3 +1,49 @@
 .tfm {
-  width: 280px;
+  width: 400px;
+  min-height: 300px;
+  margin: 0 auto;
+  border: 1px solid black;
+  position: relative;
+  .tfm-area {
+    position: absolute;
+    margin: 0 auto;
+    width: 270px;
+    height: 300px;
+    left: 50%;
+    margin-left: -135px;
+    background: rgba(yellowgreen, 0.5);
+    cursor: move;
+    z-index: 20;
+  }
+  .tfm-inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    overflow: hidden;
+    background: rgba(gray, 0.1);
+  }
+  .tfm-container {
+    position: relative;
+    width: 270px;
+    height: 300px;
+    margin: 0 auto;
+  }
+
+  .tfm-mask {
+    position: relative;
+    width: 270px;
+    height: 300px;
+    overflow: hidden;
+  }
+
+  .tfm-image {
+    position: absolute;
+    width: auto;
+    top: 0;
+    left: 0;
+    &.tfm-image-overlay {
+      opacity: 0.3;
+    }
+  }
 }

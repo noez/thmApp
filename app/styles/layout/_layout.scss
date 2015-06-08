@@ -15,6 +15,7 @@ html
 body
 {
   padding: 0;
+  overflow-x: hidden;
 }
 
 .wrapper
@@ -46,22 +47,21 @@ body
   {
     font-size: 12px;
     font-weight: normal;
-
+    font-family: font('sans', 'normal');
     position: relative;
 
     display: inline-block;
 
     width: 100%;
     margin: 0;
-    padding: 1em 0;
+    padding: 20px 0;
 
     text-align: center;
-    letter-spacing: .15em;
+    letter-spacing: 2px;
     text-transform: uppercase;
 
     color: white;
-    border-bottom: 1px solid #ebebeb;
-    background: #a6833c;
+    background: color('gold');
     &:after
     {
       position: absolute;
@@ -78,7 +78,7 @@ body
       content: '';
       transform: rotate(45deg);
 
-      background: #a6833c;
+      background: color('gold');
     }
   }
   @include element ('body')
@@ -95,7 +95,7 @@ body
 
     box-sizing: border-box;
     width: 50%;
-    height: 100%;
+    min-height: 100vh;
     padding: 1em;
 
     @include modifier('left')

@@ -1,68 +1,68 @@
 .wizard
 {
-  display: block;
+    display: block;
 
-  width: 600px;
-  margin: 0 auto;
-
-  text-align: center;
-
-  @include element('step')
-  {
-    display: inline-block;
-
-    padding: 0 1.25em;
-
-    text-align: center;
-    vertical-align: middle;
-
-  }
-}
-
-.step
-{
-  font-family: $serif-stack;
-
-  cursor: pointer ;
-  user-select: none;
-  text-align: center;
-  opacity: .35;
-  &.active {
-    opacity: 1;
-  }
-
-  @include element('dot')
-  {
-    font-size: 10px;
-    line-height: 24px;
-
-    display: inline-block;
-
-    width: 24px;
-    height: 24px;
+    width: 600px;
     margin: 0 auto;
 
     text-align: center;
 
-    color: color('white');
-    border-radius: 50%;
-    background-color: color('gold');
-  }
-  @include element('label')
-  {
-    font-size: 11px;
-    font-weight: 300;
+    @include element('step')
+    {
+        display: inline-block;
 
-    display: inline-block;
+        padding: 0 1.25em;
 
-    width: 100%;
-    margin-top: .25em;
+        text-align: center;
+        vertical-align: middle;
+    }
+}
 
-    letter-spacing: .1em;
-    text-transform: uppercase;
+.step
+{
+    cursor: pointer ;
+    user-select: none;
+    text-align: center;
 
-    color: color('gray');
-  }
+    opacity: .15;
+
+    @include element('dot')
+    {
+        font-family: font('sans','normal');
+        font-size: 12px;
+        line-height: 24px;
+
+        display: inline-block;
+
+        width: 24px;
+        height: 24px;
+        margin: 0 auto;
+
+        text-align: center;
+
+        color: color('white');
+        border-radius: 50%;
+        background-color: color('gold');
+    }
+    @include element('label')
+    {
+        font-family: font('sans','bold');
+        font-size: 11px;
+
+        display: inline-block;
+
+        width: 100%;
+        margin-top: .25em;
+
+        letter-spacing: 2px;
+        text-transform: uppercase;
+
+        color: color('gray','shade');
+    }
+    &.active
+    {
+        opacity: 1;
+    }
 }
 
 .tl-step
@@ -82,9 +82,9 @@
     letter-spacing: .15em;
     text-transform: uppercase;
 
-    background:color('gold');
     color: white;
     border-bottom: 1px solid color('white','shade');
+    background: color('gold');
     &:after
     {
         position: absolute;
@@ -101,12 +101,10 @@
         content: '';
         content: '';
         transform: rotate(45deg);
-
         /* border: 1px solid color('white','shade');
         border-top-color: transparent;
         border-left-color: transparent; */
+
         background: color('gold');
     }
 }
-
-

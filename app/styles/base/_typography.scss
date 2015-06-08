@@ -18,9 +18,10 @@ $serif_stack : 'Lora', serif;
   font-weight: bold;
   color: color('gray');
 }
+*/
 p, li, span , a {
-	font-family: $sans-stack;
+	font-family: font('serif','normal');
+  font-size: 12px;
 	line-height: 24px;
-  font-weight: 100;
-	color: color('gray');
-} */
+	color: color('gray','shade');
+}

@@ -1,0 +1,49 @@
+.backslider
+{
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+  .bs-overlay
+  {
+    display: none;
+  }
+}
+
+.bs-caption
+{
+  position: absolute;
+  z-index: 20;
+  top: 1em;
+
+  width: 350px;
+  height: 250px;
+  padding: 1em;
+
+  background: transparent;
+
+  @include modifier('top-right')
+  {
+    right: 50px;
+  }
+  @include modifier('top-left')
+  {
+    left: 50px;
+  }
+  @include element('heading')
+  {
+    margin-top: 0;
+    font-size: 40px;
+    line-height: 1;
+    font-family: font('serif','bold');
+
+    color: color('gray', 'shade');
+  }
+  @include element('txt')
+  {
+    font-size: 16px;
+    line-height: 32px;
+    font-family: font('serif','normal');
+    color: color('gray', 'shade');
+  }
+}

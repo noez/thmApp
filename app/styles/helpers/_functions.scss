@@ -8,6 +8,11 @@
   @return map_get(map_get($colors, $color-name), $tone);
 }
 
+// get font in a map font stack
+@function font($font-name, $weight: base) {
+  @return map_get(map_get($font-stack, $font-name), $weight);
+}
+
 @function headings($from:1, $to:6) {
     @if $from == $to {
         @return 'h#{$from}';

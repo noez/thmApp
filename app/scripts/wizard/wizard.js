@@ -16,6 +16,7 @@ angular
     $stateProvider
       .state('wizard',{
         url : '/wizard',
+        abstract: true,
         templateUrl: 'views/wizard/wizard.html',
         controller: 'WizardCtrl'
       });
@@ -57,16 +58,21 @@ angular
     // ui-sref prefix
     prefix = 'wizard.';
 
-    // validate if steps in session exists
-    if(_.isNull($scope.$storage.steps) || _.isUndefined($scope.$storage.steps)){
+    if(_.isEmpty($scope.$storage.steps)) {
       $scope.$storage.steps = defaultSteps;
     }
 
+    // validate if steps in session exists
+    /*if(_.isEmpty($scope.$storage.steps) && (!_.isNull($scope.$storage.steps) || !_.isUndefined($scope.$storage.steps))){
+
+    }*/
+
     // listen for changes in the ui router states
-    $rootScope.$on('$stateChangeStart', function(event, toState){
+    /*$rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams){
+
       // get the ref from to ui router state
       var stateRef = toState.name.split('.')[1];
-
+      console.log(toState);
       // finds the index of the state
       var indexState = _.findIndex($scope.$storage.steps, function (step) {
         return step.ref === stateRef;
@@ -78,7 +84,7 @@ angular
           n.valid = false;
         }
       });
-    });
+    });*/
 
     // listen for changes in the steps
     $scope.$on('stepChange', function(event, step ){

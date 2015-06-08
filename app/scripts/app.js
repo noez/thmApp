@@ -13,6 +13,6 @@ angular
     'app.core',
     'app.blocks',
     'app.services',
-    'app.home',
-    'app.wizard'
+    'app.wizard',
+    'app.home'
   ]);

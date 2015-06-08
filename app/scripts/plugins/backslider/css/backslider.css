@@ -1,0 +1,138 @@
+/*
+ Backslider - Fullscreen Background Image Slider   
+*/
+
+.backslider,
+.backslider .bs-slides li,
+.backslider .bs-overlay,
+.backslider .bs-preload,
+.backslider .bs-coverslide {
+	width: 100%;
+	height: 100%;
+}
+
+.backslider {
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: #000;
+	overflow: hidden;
+	z-index: 0;
+}
+
+/* slides */
+.backslider .bs-slides {
+	list-style: inside none;
+}
+
+.backslider .bs-slides li {
+ 	display: block;
+	position: absolute;	
+	top: 0; 
+	left: 0;
+	overflow: hidden;
+}
+
+.backslider .bs-slides img,
+.backslider .bs-slides .bs-landscape {
+	width: 100%;
+	height: auto;
+}
+
+.backslider .bs-slides .bs-portrait {
+	width: auto;
+	height: 100%;
+}
+
+.backslider .bs-coverslide {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 40;
+	overflow: hidden;
+}
+
+/* slides overlay pattern */
+.backslider .bs-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: url("../images/bs-overlay.png");
+	z-index: 50;
+}
+
+/* preloader */
+.backslider .bs-preload {
+	position: absolute;
+	background: #000000;
+	z-index: 100;
+}
+
+.backslider .bs-preload-indicator {
+	float: right;
+	width: 32px;
+	height: 32px;
+	background: url("../images/bs-preloader.gif") no-repeat center center;
+	margin: 10px;
+}
+
+/* backslider controls box */
+.backslider .bs-controls {
+	position: absolute;
+	display: none;
+	right: 10px;
+	bottom: 10px;
+	z-index: 100;
+}
+
+/* next, previous, timer and pagination buttons */
+.backslider .bs-controls .bs-timer,
+.backslider .bs-controls .bs-next,
+.backslider .bs-controls .bs-scroll,
+.backslider .bs-controls .bs-previous,
+.backslider .bs-controls .bs-pagination {
+	display: block;
+	float: left;
+	width: 20px;
+	height: 20px;
+	outline: none;
+}
+
+.backslider .bs-controls .bs-timer {
+	background: url("../images/bs-controls.png") no-repeat -20px 0;
+}
+
+.backslider .bs-controls .bs-scroll {
+	background: url("../images/bs-controls.png") no-repeat -20px -80px;
+}
+
+.backslider .bs-controls .bs-next {
+	background: url("../images/bs-controls.png") no-repeat -20px -40px;
+}
+
+.backslider .bs-controls .bs-previous {
+	background: url("../images/bs-controls.png") no-repeat -20px -60px;
+}
+
+.backslider .bs-controls .bs-pagination {
+	background: url("../images/bs-controls.png") no-repeat -20px -20px;
+}
+
+.backslider .bs-controls .bs-next:hover,
+.backslider .bs-controls .bs-previous:hover,
+.backslider .bs-controls .bs-pagination:hover,
+.backslider .bs-controls .bs-pagination.bs-active {
+	background-color: #000000;
+	background-color: rgba(0,0,0,0.2);
+}
+
+/* thumbnails mode */
+.backslider .bs-controls .bs-thumbnails {
+	display: block;
+	float: left;
+	width: 40px;
+	height: 40px;
+	overflow: hidden;
+	margin-left: 5px;
+	background: #000;
+}

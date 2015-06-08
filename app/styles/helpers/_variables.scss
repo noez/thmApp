@@ -5,14 +5,14 @@ $colors: (
     shade : #2E0D08
   ),
   'gold' : (
-    tint : #CBAB68,
-    base : #A6833C,
+    tint : #d2aa60,
+    base : #bd9655,
     shade : #81601C
   ),
   'gray' : (
     tint : #949494,
     base : #666666,
-    shade : #2D2D2D
+    shade : #040707
   ),
   'white' : (
     tint : #F5F5F5,
@@ -22,13 +22,15 @@ $colors: (
 );
 
 $font-stack :(
-  'sans ' :(
+  'sans' :(
     regular : 'azo_sansregular',
     italic : 'azo_sansitalic',
     bold : 'azo_sansbold'
   ),
   'serif' : (
-    regular : 'Playfair Display'
+    regular : 'playfair_displayregular',
+    italic : 'playfair_displayitalic',
+    bold : 'playfair_displaybold'
   )
 );
 

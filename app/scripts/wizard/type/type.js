@@ -31,7 +31,13 @@ angular.module('app.wizard.type', [])
     $scope.isValid = false;
 
     $scope.$storage.data = {};
-    $scope.$storage.order = {};
+
+    // reset values
+    for (var i = 0; i < $scope.$storage.steps.length; i++) {
+      if( i > 0) {
+        $scope.$storage.steps[i].valid = false;
+      }
+    }
 
     // fetch and populate the types collection
     Types
@@ -69,9 +75,10 @@ angular.module('app.wizard.type', [])
       }
 
       //
+
       $scope.$emit('stepChange', {
         index: 0,
-        isValid: true
+        isValid: $scope.isValid
       });
 
     };

@@ -1,0 +1,24 @@
+.btn {
+  border-radius: 0 !important;
+  border: 0 !important;
+  &.btn-primary {
+    color: white;
+    background-color: color('gold');
+    padding: 10px 40px;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 32px;
+    font-family: font('serif','normal');
+    letter-spacing: 2px;
+    &:hover {
+      background-color: color('gold', 'tint');
+    }
+  }
+  &.btn-primary-light {
+    background-color: color('gold', 'tint');
+    &:hover {
+      background-color: #fff;
+      color: color('gray','shade');
+    }
+  }
+}

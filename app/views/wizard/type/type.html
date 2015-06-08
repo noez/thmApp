@@ -1,7 +1,9 @@
-<div class="type-view">
-  <h3 class="tl-step">Selecciona el tequila de tu preferencia</h3>
-  <h1>{{ title }}</h1>
+<div class="layout__body">
+  <h1 class="layout__title">
+    Selecciona el tequila de tu preferencia
+  </h1>
   <ul class="list-unstyled type-list">
-    <li ng-repeat="type in types" th-tequila-card tq-type="type" tq-size="500" tq-selected="selected(type)"></li>
+    <li ng-repeat="type in types" th-tequila-card tq-type="type" tq-size="400" tq-selected="selected(type)"></li>
   </ul>
 </div>
+
