@@ -37,14 +37,20 @@ angular
       angular.forEach($scope.files, function (file) {
         fd.append('file', file);
       });
-      UploadImage
-        .file(fd)
-        .then(function(data) {
-          $scope.design.uploadImage = data;
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
+
+      if (!_.isUndefined($scope.files) && !_.isNull($scope.files)) {
+        UploadImage
+          .file(fd)
+          .then(function(data) {
+            $scope.design.uploadImage = data;
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
+      }else {
+        alert('error upload image required');
+      }
+
     };
 
 

@@ -20,22 +20,14 @@
           </div>
           <button class="btn btn-primary" ng-click="uploadImage()">Subir Archivo</button>
         </form>
-        <pre> {{ design.uploadImage | json }}</pre>
+        <hr>
       </div>
 
       <!-- image transform mockup -->
       <div class="design-transform-image">
-        <div class="zoom">
-          <div class="zoom__area"></div>
-          <div class="zoom__inner">
-            <div class="zoom__container">
-              <div class="zoom__mask">
-                <img ng-src="{{ design.uploadImage.file }}" alt="" class="zoom__image">
-              </div>
-              <img ng-src="{{ design.uploadImage.file }}" alt="" class="zoom__image">
-            </div>
-          </div>
-        </div>
+      <th-transform-image th-image="design.uploadImage">
+
+      </th-transform-image>
       </div>
 
 

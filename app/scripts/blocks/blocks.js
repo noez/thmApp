@@ -117,4 +117,89 @@ angular.module('app.blocks', [])
       });
     }
   };
+}])
+
+.directive('thTransformImage', [ '$window', function($window){
+  // Runs during compile
+  return {
+    scope: {
+      image : '=thImage'
+    },
+    restrict: 'E',
+    template: [
+      '<div class="tfm">',
+        '<div class="tfm-area"></div>',
+          '<div class="tfm-inner">',
+            '<div class="tfm-container>',
+              '<div class="tfm-mask">',
+                '<img ng-src="{{ image.file}}" class="tfm-image" />',
+              '</div>',
+              '<img ng-src="{{ image.file}}" class="tfm-image" />',
+            '</div>',
+          '</div>',
+      '</div>'
+    ].join(''),
+    replace: true,
+    transclude: true,
+    link: function(scope, element, attrs) {
+      var
+        isInitialized = false,
+        isTouchSupported = ('ontouchstart' in $window) || ($window.navigator.msPointerEnable) ? true : false,
+        events = (isTouchSupported ? {
+            start: 'touchstart',
+            end: 'touchend',
+            move: 'touchmove'
+        } : {
+            start: 'mousedown',
+            end: 'mouseup',
+            move: 'mousemove'
+        });
+
+
+
+      var transform = {
+        init : function () {
+          console.log('transform initialized');
+          this.cache();
+          return this;
+        },
+        reload : function () {
+
+        },
+        // cache the elements to work
+        cache : function() {
+          console.log('cache...');
+          var self = this;
+          self.dragArea = element.find('.tfm-area');
+          self.dragImage = element.find('.tfm-image');
+          self.dragMask = element.find('.tfm-mask');
+
+          console.log(self);
+        },
+        rect : function () {
+          return {
+
+          };
+        }
+      };
+
+
+      // listen if a new image has been uploaded
+      scope.$watch('image', function (newVal){
+        if (isInitialized) {
+          transform.reload();
+        }else if(!_.isUndefined(newVal) && ! _.isEmpty(newVal)){
+          console.log(newVal);
+          transform.init();
+          isInitialized = true;
+        }
+      });
+
+
+    }
+  };
 }]);
+
+
+
+
