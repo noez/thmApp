@@ -7,6 +7,7 @@
     <div class="type">
       <div class="type__body">
         <figure class="text-center">
+          <img src="images/ghots-bottle.png" alt="" height="500" ng-show="!product.img_zoom_size">
           <img ng-src="{{ product.img_zoom_size }}" height="500">
         </figure>
       </div>
@@ -18,6 +19,8 @@
   <div class="layout__col">
     <div class="version">
       <div class="version__size">
+        <h1 ng-bind="product.title"></h1>
+        <div class="product-description "ng-bind-html="product.description"></div>
         <form class="version__form">
           <label for="">Presentación</label>
           <select ng-model="product"

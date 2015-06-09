@@ -33,6 +33,21 @@ angular
         });
 
       return promise;
+    },
+    getById : function(typeId) {
+      var defered = $q.defer(),
+        promise = defered.promise,
+        fragmentUrl = 'types/';
+
+      $http.get(baseUrl + fragmentUrl + typeId)
+        .success(function(data) {
+          defered.resolve(data);
+        })
+        .error(function(err) {
+          defered.reject(err);
+        });
+
+      return promise;
     }
   };
 }])

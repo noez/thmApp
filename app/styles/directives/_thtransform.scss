@@ -1,17 +1,19 @@
 .tfm {
-  width: 400px;
-  min-height: 300px;
+  width: 500px;
+  min-height: 400px;
   margin: 0 auto;
   border: 1px solid black;
   position: relative;
+  .tfm-wrap {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+  }
   .tfm-area {
     position: absolute;
     margin: 0 auto;
-    width: 270px;
-    height: 300px;
-    left: 50%;
-    margin-left: -135px;
-    background: rgba(yellowgreen, 0.5);
+    width: 100%;
+    height: 100%;
     cursor: move;
     z-index: 20;
   }
@@ -26,14 +28,14 @@
   .tfm-container {
     position: relative;
     width: 270px;
-    height: 300px;
-    margin: 0 auto;
+    height: 200px;
+    margin: 100px auto;
   }
 
   .tfm-mask {
     position: relative;
     width: 270px;
-    height: 300px;
+    height: 200px;
     overflow: hidden;
   }
 
@@ -46,4 +48,31 @@
       opacity: 0.3;
     }
   }
+
+}
+
+.tfm-range {
+  width: 300px;
+  height: 40px;
+  margin: 2em auto;
+  position: relative;
+
+  .tfm-range-thumb {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: yellowgreen;
+    z-index: 10;
+    cursor: move;
+  }
+
+  .tfm-range-track {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: lighten(yellowgreen, 20%);
+  }
+
 }

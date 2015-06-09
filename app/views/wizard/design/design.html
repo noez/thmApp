@@ -4,8 +4,19 @@
   </h1>
   <div class="layout__col layout__col--left">
     <div class="design__left">
-      <div class="bottle">
-        <img ng-src="{{ design.product.img_tag }}" alt="">
+      <div class="label">
+        <div class="label__template">
+          <img ng-src="{{ design.template.timage }}" alt="">
+        </div>
+        <div class="label__image">
+          <div class="label__mask">
+            <img ng-src="{{ design.labelImage.file}}" alt="">
+          </div>
+        </div>
+        <div class="label__base">
+          <img ng-src="{{ design.type.tagimg }}" alt="">
+        </div>
+
       </div>
     </div>
   </div>
@@ -25,9 +36,10 @@
 
       <!-- image transform mockup -->
       <div class="design-transform-image">
-      <th-transform-image th-image="design.uploadImage">
+      <th-transform-image th-image="design.uploadImage" th-transform="design.transform">
 
       </th-transform-image>
+      <pre>{{ design.transform | json}}</pre>
       </div>
 
 

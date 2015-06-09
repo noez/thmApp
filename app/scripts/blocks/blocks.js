@@ -6,19 +6,19 @@
  */
 angular.module('app.blocks', [])
 
-.directive('hsBackSlider', ['$timeout', function($timeout){
+.directive('hsBackSlider', ['$timeout', function($timeout) {
   // Runs during compile
   return {
     // name: '',
     // priority: 1,
     // terminal: true,
     scope: {
-      source : '=',
-      options : '='
+      source: '=',
+      options: '='
     }, // {} = isolate, true = child, false/undefined = no change
     // controller: function($scope, $element, $attrs, $transclude) {},
     // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-    restrict: 'AE', // E = Element, A = Attribute, C = Class, M = Comment
+    restrict: 'AE', // E = Element, A = evt, C = Class, M = Comment
     // template: '',
     // templateUrl: '',
     //replace: true,
@@ -28,18 +28,18 @@ angular.module('app.blocks', [])
       var backslider = null,
         defaultOptions = {
           mode: 'timer',
-        effect: 'slidefade',
-        effectTime: 1500,
-        timerDelay: 10000,
-        centerImages: true
-      };
+          effect: 'slidefade',
+          effectTime: 1500,
+          timerDelay: 10000,
+          centerImages: true
+        };
 
       if (!_.isEmpty(scope.options)) {
         angular.extend(defaultOptions, scope.options);
       }
 
       scope.$watch('source', function(newVal) {
-        if(!_.isEmpty(newVal) || ( !_.isUndefined(newVal) && !_.isNull(newVal))) {
+        if (!_.isEmpty(newVal) || (!_.isUndefined(newVal) && !_.isNull(newVal))) {
           $timeout(function() {
             backslider = element.backslider(defaultOptions);
           }, 0);
@@ -118,7 +118,7 @@ angular.module('app.blocks', [])
     scope: {
       source: '=thSource'
     },
-    link: function(scope, element, attrs) {
+    link: function(scope, element) {
       var isInitialized = false;
       carousel = element.children('.jcarousel');
 
@@ -137,7 +137,7 @@ angular.module('app.blocks', [])
     controller: ['$scope', '$attrs', function($scope, $attrs) {
 
       if ($attrs.thCarousel) {
-        $scope.$parent[$attrs.thCarousel] = this
+        $scope.$parent[$attrs.thCarousel] = this;
       }
 
       this.next = function() {
@@ -165,23 +165,31 @@ angular.module('app.blocks', [])
   };
 }])
 
-.directive('thTransformImage', ['$window', function($window) {
+.directive('thTransformImage', ['$window', '$document', function($window, $document) {
   // Runs during compile
+
   return {
     scope: {
-      image: '=thImage'
+      image: '=thImage',
+      dataTransform : '=thTransform'
     },
     restrict: 'E',
     template: [
       '<div class="tfm">',
-      '<div class="tfm-area"></div>',
-      '<div class="tfm-inner">',
-      '<div class="tfm-container">',
-      '<div class="tfm-mask">',
-      '<img ng-src="{{ image.file}}" class="tfm-image">',
+        '<div class="tfm-wrap">',
+          '<div class="tfm-area"></div>',
+          '<div class="tfm-inner">',
+            '<div class="tfm-container">',
+              '<div class="tfm-mask">',
+                '<img ng-src="{{ image.file}}" class="tfm-image">',
+              '</div>',
+              '<img ng-src="{{ image.file}}" class="tfm-image tfm-image-overlay">',
+            '</div>',
+          '</div>',
       '</div>',
-      '<img ng-src="{{ image.file}}" class="tfm-image tfm-image-overlay">',
-      '</div>',
+      '<div class="tfm-range">',
+        '<div class="tfm-range-thumb"></div>',
+        '<div class="tfm-range-track"></div>',
       '</div>',
       '</div>'
     ].join(''),
@@ -201,7 +209,8 @@ angular.module('app.blocks', [])
           move: 'mousemove'
         }),
         getPosition = function(evt) {
-          var posX = 0, posY = 0;
+          var posX = 0,
+            posY = 0;
 
           if (evt.originalEvent.targetTouches) {
             posX = evt.originalEvent.targetTouches[0].pageX;
@@ -225,38 +234,77 @@ angular.module('app.blocks', [])
 
       var transform = {
         init: function() {
-          console.log('transform initialized');
           this.cache();
-          this.bind();
           return this;
         },
         reload: function() {
-          console.log('reload...');
           var self = this;
           self.unbind();
-          self.centerImage();
+          self.cache();
         },
         // cache the elements to work
         cache: function() {
-          console.log('cache...');
           var self = this;
           self.dragArea = element.find('.tfm-area');
           self.dragImage = element.find('.tfm-image');
           self.dragMask = element.find('.tfm-mask');
-
+          self.dragImage.css({
+            'width': 'auto',
+            'top': 0,
+            'left': 0
+          });
+          self.initVectors();
           self.centerImage();
           // vectors
-          self.initVectors();
 
-          console.log(self.vector);
+          this.bind();
 
         },
         centerImage: function() {
           var self = this;
 
           self.dragImage.one('load', function() {
-            console.log('image load & center');
-            // scale and center images
+
+            var
+              rect = self.rect($(this)),
+              mask = self.rect(self.dragMask),
+              ratio = rect.width / rect.height,
+              direction = (ratio > 1) ? 'horizontal' : 'vertical',
+              newWidth = 0,
+              newHeight = 0;
+
+            if (direction === 'vertical') {
+              newWidth = mask.width * 1.2;
+              newHeight = newWidth / ratio;
+
+              $(this).width(newWidth);
+              $(this).height(newHeight);
+
+            } else if (direction === 'horizontal') {
+              newHeight = mask.height * 1.2;
+              newWidth = newHeight * ratio;
+
+              $(this).width(newWidth);
+              $(this).height(newHeight);
+            }
+
+            var
+              centerX = (mask.width - $(this).width()) * 0.5,
+              centerY = (mask.height - $(this).height()) * 0.5;
+            transform.vector.imgInit.x = centerX;
+            transform.vector.imgInit.y = centerY;
+
+            transform.imgRect = {
+              width : newWidth,
+              height: newHeight,
+              top: centerY,
+              left: centerX
+            };
+
+            $(this).css({
+              left: centerX,
+              top: centerY
+            });
 
           }).each(function() {
             if (this.complete) {
@@ -266,34 +314,121 @@ angular.module('app.blocks', [])
         },
         initVectors: function() {
           var self = this;
+
           self.vector = {
-            init: {
-              x: 0,
-              y: 0
-            },
-            current: {
-              x: 0,
-              y: 0
-            },
-            imgInit: {
-              x: 0,
-              y: 0
-            },
-            imgDest: {
-              x: 0,
-              y: 0
-            }
+            init: { x: 0,    y: 0},
+            current: { x: 0, y: 0},
+            imgInit: { x: 0, y: 0},
+            imgDest: { x: 0, y: 0}
           };
+
+        },
+        scale: function(range){
+          var self = this,
+            nw = clamp( ( range.value * self.imgRect.width )  , self.imgRect.width, ( self.imgRect.width * range.max )),
+            nh = nw * self.imgRect.height / self.imgRect.width,
+            ot = self.vector.imgInit.y,
+            ol = self.vector.imgInit.x,
+            s = range.value / range.lastValue,
+            nt = s * ot + (1 - s) * self.dragMask.outerHeight(true) / 2,
+            nl = s * ol + (1 - s) * self.dragMask.outerWidth(true) / 2;
+
+            nt = clamp( nt , self.dragMask.outerHeight(true) - nh, 0);
+            nl = clamp( nl , self.dragMask.outerWidth(true) - nw, 0);
+
+            self.dragImage.css({
+              width : nw,
+              height : nh,
+              top: nt,
+              left: nl
+            });
+            scope.$apply(function() {
+              scope.dataTransform.x = nl;
+              scope.dataTransform.y = nt;
+              scope.dataTransform.width = nw;
+              scope.dataTransform.height = nh;
+            });
+        },
+        lastPosition: function(){
+          var
+            self = this,
+            imgPosition = self.dragImage.position();
+
+          self.vector.imgInit.x = imgPosition.left;
+          self.vector.imgInit.y = imgPosition.top;
         },
         bind: function() {
           var self = this;
-          console.log('adding listeners... :)');
+          self.dragArea.on(events.start, self.onStartHandler);
+        },
+        onStartHandler: function(evt){
+          this.allowUp = (this.scrollTop > 0);
+          this.allowDown = (this.scrollTop < this.scrollHeight - this.clientHeight);
+          this.prevTop = null;
+          this.prevBot = null;
+          this.lastY = evt.pageY;
+
+          transform.vector.init.x = getPosition(evt).x;
+          transform.vector.init.y = getPosition(evt).y;
+
+          $document.on(events.end, transform.onEndHandler);
+          $document.on(events.move, transform.onMoveHandler);
+
+          transform.dragImage.on('dragstart', function (evt) {
+            evt.preventDefault();
+          });
+        },
+        onEndHandler: function(evt){
+          $document.off(events.move, transform.onMoveHandler);
+          $document.off(events.end, transform.onEndHandler);
+
+        },
+        onMoveHandler: function(evt){
+          var up = (evt.pageY > this.lastY), down = !up;
+          this.lastY = evt.pageY;
+
+          if ((up && this.allowUp) || (down && this.allowDown)) evt.stopPropagation();
+          else evt.preventDefault();
+
+          var
+            mouse = getPosition(evt),
+            bound = {
+              top: transform.dragMask.outerHeight() - transform.dragImage.height(),
+              left : transform.dragMask.outerWidth() - transform.dragImage.width(),
+              right : 0,
+              bottom : 0
+            };
+
+            transform.vector.current.x = mouse.x;
+            transform.vector.current.y = mouse.y;
+            var
+              dx = transform.vector.current.x - transform.vector.init.x,
+              dy = transform.vector.current.y - transform.vector.init.y,
+              nx = clamp(transform.vector.imgInit.x + dx , bound.left, bound.right),
+              ny = clamp(transform.vector.imgInit.y + dy , bound.top, bound.bottom);
+
+            transform.vector.imgDest.x = nx;
+            transform.vector.imgDest.y = ny;
+
+            transform.dragImage.css({
+              left : transform.vector.imgDest.x,
+              top : transform.vector.imgDest.y
+            });
+
+            transform.vector.init.x = transform.vector.current.x;
+            transform.vector.init.y = transform.vector.current.y;
+
+            transform.vector.imgInit.x = transform.vector.imgDest.x;
+            transform.vector.imgInit.y = transform.vector.imgDest.y;
+
+
+
+            scope.$apply(function() {
+              scope.dataTransform.x = transform.vector.imgDest.x;
+              scope.dataTransform.y = transform.vector.imgDest.y;
+            });
         },
         unbind: function() {
-          console.log('removing listeners... x(');
-        },
-        onStartHandler: function(evt) {
-
         },
         rect: function(el) {
           return el[0].getBoundingClientRect();
@@ -301,36 +436,97 @@ angular.module('app.blocks', [])
       };
 
       var range = {
-        init: function(){
-          console.log('range initialized..');
+        init: function() {
+          var self = this;
+          // settings default
+          self.data = {
+            min: 1,
+            max : 3,
+            value : 1,
+            lastValue : 1
+          };
+
           this.cache();
-          this.bind();
           return this;
         },
-        reload: function(){
-          console.log('reload');
+        reload: function() {
           var self = this;
           self.unbind();
+          self.cache();
         },
-        cache: function(){
-          console.log('range cache...');
+        cache: function() {
+          var self = this;
+
+          self.thumb = element.find('.tfm-range-thumb');
+          self.track = element.find('.tfm-range-track');
+
+          // reset styles
+          self.thumb.css({
+            top: 0,
+            left: 0
+          });
+
+          // reset default values
+          self.data.value = 1;
+          self.data.lastValue  = 1;
+
+          self.bound = {
+            min : self.track.position().left,
+            max : self.track.width() - self.thumb.width()
+          };
+
+
+          self.offsetX = 0;
+
+          self.bind();
+
         },
-        bind: function(){
-          console.log('range binding..');
+        bind: function() {
+          var self = this;
+          self.thumb.on(events.start, self.onStartHandler);
         },
-        unbind: function(){
-          console.log('range unbinding..');
+        onStartHandler: function(evt){
+          evt.preventDefault();
+          range.offsetX = getPosition(evt).x - range.thumb.position().left;
+
+          $document.on(events.end, range.onEndHandler);
+          $document.on(events.move, range.onMoveHandler);
+        },
+        onEndHandler: function(evt){
+          $document.off(events.end, range.onEndHandler);
+          $document.off(events.move, range.onMoveHandler);
+
+          range.data.lastValue = range.data.value;
+          transform.lastPosition();
+        },
+        onMoveHandler: function(evt){
+           var
+            mouse = getPosition(evt),
+            proportion = (range.data.max - range.data.min) / (range.bound.max - range.bound.min),
+            point = ( mouse.x - range.offsetX ),
+            newPoint = clamp(point, range.bound.min, range.bound.max),
+            value = (point - range.bound.min) * proportion + range.data.min;
+
+            range.thumb.css({ left : newPoint });
+
+            value = clamp( value, range.data.min, range.data.max);
+            range.data.value = value;
+
+          transform.scale(range.data);
+        },
+        unbind: function() {
+          range.thumb.off(events.start, range.onStartHandler);
         },
       };
-
 
       // listen if a new image has been uploaded
       scope.$watch('image', function(newVal) {
         if (isInitialized) {
           transform.reload();
+          range.reload();
         } else if (!_.isUndefined(newVal) && !_.isEmpty(newVal)) {
-          console.log(newVal);
           transform.init();
+          range.init();
           isInitialized = true;
         }
       });

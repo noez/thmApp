@@ -31,6 +31,7 @@ angular.module('app.wizard.type', [])
     $scope.isValid = false;
 
     $scope.$storage.data = {};
+    delete $scope.$storage.order;
 
     // reset values
     for (var i = 0; i < $scope.$storage.steps.length; i++) {
