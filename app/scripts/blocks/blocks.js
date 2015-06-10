@@ -165,13 +165,12 @@ angular.module('app.blocks', [])
   };
 }])
 
-.directive('thTransformImage', ['$window', '$document', function($window, $document) {
+.directive('thTransformImage', ['$window', '$document', 'Matriz', function($window, $document, Matriz) {
   // Runs during compile
 
   return {
     scope: {
-      image: '=thImage',
-      dataTransform : '=thTransform'
+      image: '=thImage'
     },
     restrict: 'E',
     template: [
@@ -195,7 +194,8 @@ angular.module('app.blocks', [])
     ].join(''),
     replace: true,
     transclude: true,
-    link: function(scope, element, attrs) {
+    link: function(scope, element) {
+      scope.matriz = Matriz;
       var
         isInitialized = false,
         isTouchSupported = ('ontouchstart' in $window) || ($window.navigator.msPointerEnable) ? true : false,
@@ -208,6 +208,8 @@ angular.module('app.blocks', [])
           end: 'mouseup',
           move: 'mousemove'
         }),
+        scaleImage = 400 / 270,
+
         getPosition = function(evt) {
           var posX = 0,
             posY = 0;
@@ -255,10 +257,7 @@ angular.module('app.blocks', [])
           });
           self.initVectors();
           self.centerImage();
-          // vectors
-
           this.bind();
-
         },
         centerImage: function() {
           var self = this;
@@ -291,6 +290,7 @@ angular.module('app.blocks', [])
             var
               centerX = (mask.width - $(this).width()) * 0.5,
               centerY = (mask.height - $(this).height()) * 0.5;
+
             transform.vector.imgInit.x = centerX;
             transform.vector.imgInit.y = centerY;
 
@@ -300,6 +300,13 @@ angular.module('app.blocks', [])
               top: centerY,
               left: centerX
             };
+
+           scope.$apply(function() {
+              scope.matriz.transform.left = transform.imgRect.left * scaleImage;
+              scope.matriz.transform.top = transform.imgRect.top * scaleImage;
+              scope.matriz.transform.width = transform.imgRect.width * scaleImage;
+              scope.matriz.transform.height = transform.imgRect.height * scaleImage;
+            });
 
             $(this).css({
               left: centerX,
@@ -343,10 +350,10 @@ angular.module('app.blocks', [])
               left: nl
             });
             scope.$apply(function() {
-              scope.dataTransform.x = nl;
-              scope.dataTransform.y = nt;
-              scope.dataTransform.width = nw;
-              scope.dataTransform.height = nh;
+              scope.matriz.transform.left = nl * scaleImage;
+              scope.matriz.transform.top = nt * scaleImage;
+              scope.matriz.transform.width = nw * scaleImage;
+              scope.matriz.transform.height = nh * scaleImage;
             });
         },
         lastPosition: function(){
@@ -424,8 +431,8 @@ angular.module('app.blocks', [])
 
 
             scope.$apply(function() {
-              scope.dataTransform.x = transform.vector.imgDest.x;
-              scope.dataTransform.y = transform.vector.imgDest.y;
+              scope.matriz.transform.left = transform.vector.imgDest.x * scaleImage;
+              scope.matriz.transform.top = transform.vector.imgDest.y * scaleImage;
             });
         },
         unbind: function() {
@@ -530,8 +537,61 @@ angular.module('app.blocks', [])
           isInitialized = true;
         }
       });
+    }
+  };
+}])
 
+.directive('thLabelImage', [ 'Matriz' ,function(Matriz){
+  // Runs during compile
+  return {
+    // name: '',
+    // priority: 1,
+    // terminal: true,
+    scope: {
+      image : '=thImage',
+      label : '=thLabel',
+      build: '=thBuild'
+    },
+    template: [
+      '<div class="label-image">',
+        '<div class="label-image__mask">',
+          '<img ng-src="{{ image.file }}" ng-style="matriz.transform" class="label-image__image">',
+        '</div>',
+      '</div>'
+    ].join(''),
+    // templateUrl: '',
+    replace: true,
+    // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+    link: function(scope, element, attrs) {
+      scope.matriz = Matriz;
+
+      var isInitialized = false,
+      label = element.parent();
+      console.log(label);
+      scope.$watch('image', function(newVal) {
+        if (isInitialized) {
+          console.log('reloading label image..');
+        } else if (!_.isUndefined(newVal) && !_.isEmpty(newVal)) {
+          console.log('label image loaded...');
+          isInitialized = true;
+        }
+      });
+
+      scope.$watch('build', function(newVal) {
+        if (newVal) {
+          console.log('renderizando al canvas...');
+          html2canvas(label, {
+            onrendered: function(canvas){
+             scope.$apply(function() {
+              scope.label = canvas.toDataURL();
+              console.log(typeof scope.label);
+             });
+            }
+          });
+        }
+      });
 
     }
   };
 }]);
+

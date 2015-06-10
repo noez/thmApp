@@ -9,6 +9,9 @@ angular
   .module('app.services', [])
   .constant('baseUrl', 'http://maravatio.haushaus.mx/dashboard/api/')
   .constant('token', 'Token 61e7de5eae825fe98dbb8e1ad714a97d4fc090f8')
+  //local constants
+  .constant('baseUrlLocal', 'http://192.168.1.14:8000/dashboard/api/')
+  .constant('tokenLocal', 'Token c4e913f4877e6762b8458b4d349ed402a5c3a842')
 /**
  * @ngdoc service
  * @name Types
@@ -186,7 +189,7 @@ angular
  * # UploadImage
  * Service in the app.services
  */
-.factory('UploadImage', ['$http', '$q', 'baseUrl','token', function($http, $q, baseUrl, token) {
+.factory('UploadImage', ['$http', '$q', 'baseUrlLocal','tokenLocal', function($http, $q, baseUrlLocal, tokenLocal) {
   // Public API here
   return {
     file: function(fd) {
@@ -195,10 +198,10 @@ angular
         fragmentUrl = 'uploadimages/';
 
       $http
-        .post(baseUrl + fragmentUrl, fd, {
+        .post(baseUrlLocal + fragmentUrl, fd, {
           headers: {
             'Content-Type': undefined,
-            'Authorization': token
+            'Authorization': tokenLocal
           },
           transformRequest: angular.identify
         })
@@ -209,6 +212,90 @@ angular
           defered.reject(err);
         });
 
+      return promise;
+    }
+  };
+}])
+
+/**
+ * @ngdoc service
+ * @name UploadLabel
+ * @description
+ * # UploadLabel
+ * Service in the app.services
+ */
+
+.factory('UploadLabel', ['$http', '$q','baseUrlLocal', 'tokenLocal', function($http, $q, baseUrlLocal, tokenLocal){
+  return {
+    send : function (data) {
+      console.log('sevice says ' + typeof data);
+      var defered = $q.defer(),
+        promise = defered.promise,
+        fragmentUrl = 'labels/';
+
+      $http
+        .post(baseUrlLocal + fragmentUrl, data , {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': tokenLocal
+          }
+          //transformRequest: angular.identify
+        })
+        .success(function(data) {
+          defered.resolve(data);
+        })
+        .error(function(err) {
+          defered.reject(err);
+        });
+
+      return promise;
+    }
+  };
+}])
+
+/**
+ * @ngdoc service
+ * @name Matriz
+ * @description
+ * # Matriz
+ * Service in the app.services
+ */
+.factory('Matriz', [function(){
+  return{
+    transform : {}
+  };
+}])
+
+/**
+ * @ngdoc service
+ * @name Matriz
+ * @description
+ * # Matriz
+ * Service in the app.services
+ */
+.factory('Oscar', ['$http',  '$q', function($http,  $q){
+  $http.defaults.withCredentials = true;
+  return {
+    send : function (url, data) {
+      console.log('sevice says ' + typeof data);
+      var defered = $q.defer(),
+        promise = defered.promise;
+
+      $http
+        .post(url, data , {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Cookie' : 'csrftoken=InJJliexGwdAyB1X5ZQwC32KNWLF20JE'
+          },
+          transformRequest: angular.identify
+        })
+        .success(function(data) {
+          defered.resolve(data);
+        })
+        .error(function(err) {
+          defered.reject(err);
+        });
+      console.log($http.defaults);
       return promise;
     }
   };

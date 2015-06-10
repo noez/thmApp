@@ -30,6 +30,8 @@ module.exports = function(config) {
       'bower_components/lodash/lodash.js',
       'bower_components/ngstorage/ngStorage.js',
       'bower_components/jcarousel/dist/jquery.jcarousel.js',
+      'bower_components/html2canvas/build/html2canvas.js',
+      'bower_components/angular-cookies/angular-cookies.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       "app/scripts/**/*.js",

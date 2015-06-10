@@ -24,6 +24,13 @@ angular
 
     $scope.carousel;
 
+    // disable the following steps
+    for (var i = 0; i < $scope.$storage.steps.length; i++) {
+      if( i > 2) {
+        $scope.$storage.steps[i].valid = false;
+      }
+    }
+
     Event
       .get()
       .then(function(data) {
@@ -56,8 +63,6 @@ angular
     $scope.chooseTemplate = function (template) {
       var round = {
         template : template,
-        uploadImage : null,
-        render : null,
         headlines: []
       };
 

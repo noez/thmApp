@@ -4,20 +4,32 @@
   </h1>
   <div class="layout__col layout__col--left">
     <div class="design__left">
-      <div class="label">
-        <div class="label__template">
-          <img ng-src="{{ design.template.timage }}" alt="">
+      <div class="label-final">
+        <div class="label-template">
+          <img ng-src="{{ template.timage }}" alt="">
         </div>
-        <div class="label__image">
+        <th-label-image th-image="labelImage" th-label="labelRender" th-build="labelBuild">
+        </th-label-image>
+      </div>
+      <hr>
+      <button class="btn btn-primary" ng-disabled="!labelImage"  ng-click="toRender()">Enviar etiqueta</button>
+      <hr>
+      <pre>
+        {{ labelRender }}
+      </pre>
+
+      <!-- <div class="label">
+
+        <div class="label__wrap">
           <div class="label__mask">
-            <img ng-src="{{ design.labelImage.file}}" alt="">
+            <img ng-src="{{ labelImage.file}}" alt="" class="label__image">
           </div>
         </div>
         <div class="label__base">
-          <img ng-src="{{ design.type.tagimg }}" alt="">
+          <img ng-src="{{ type.tagimg }}" alt="">
         </div>
 
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="layout__col layout__col--right">
@@ -36,10 +48,9 @@
 
       <!-- image transform mockup -->
       <div class="design-transform-image">
-      <th-transform-image th-image="design.uploadImage" th-transform="design.transform">
+      <th-transform-image th-image="uploadImage">
 
       </th-transform-image>
-      <pre>{{ design.transform | json}}</pre>
       </div>
 
 

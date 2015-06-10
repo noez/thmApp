@@ -29,6 +29,13 @@ angular
 
     $scope.isValid = false;
 
+    // disable the following steps
+    for (var i = 0; i < $scope.$storage.steps.length; i++) {
+      if( i > 1) {
+        $scope.$storage.steps[i].valid = false;
+      }
+    }
+
     // fetch and populate the products collection
     Products
       .getAll($scope.$storage.data.typeId)

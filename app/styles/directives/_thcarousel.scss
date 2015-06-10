@@ -1,18 +1,88 @@
-.jcarousel {
+.jcarousel
+{
   position: relative;
+
   overflow: hidden;
-  ul {
-    width: 20000em;
+  ul
+  {
     position: relative;
 
-    /* Optional, required in this case since it's a <ul> element */
-    list-style: none;
+    width: 20000em;
     margin: 0;
     padding: 0;
+    /* Optional, required in this case since it's a <ul> element */
+
+    list-style: none;
   }
-  li {
-    float: left;
+  li
+  {
+      float: left;
   }
 }
+.jcarousel-wrapper {
+  width: 816px;
+  margin: 2em auto;
+  position: relative;
+}
+.carousel-tpl
+{
+  width: 680px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 30;
+
+  @include element('item')
+  {
+
+  }
+  @include element('block')
+  {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 1em;
+    border: 1px solid transparent;
+    transition: border-color 200ms ease-in-out;
+    &:hover {
+      border-color: color('gold');
+    }
+  }
+
+  @include element('controls') {
+    position: absolute;
+    height: 40px;
+    top: 40px;
+    width: 100%;
+    z-index: 10;
+  }
+
+  @include element('action')
+  {
+    line-height: 60px;
+    font-size: 18px;
+    color: color('gold');
+
+    display: block;
+    position: absolute;
 
 
+    width: 60px;
+    height: 60px;
+
+    background: transparent;
+    border: 1px solid color('gold');
+    border-radius: 50%;
+    &:hover {
+      color: white;
+      background-color: color('gold');
+    }
+    @include modifier('next')
+    {
+      right: 0;
+    }
+    @include modifier('prev')
+    {
+      left: 0;
+    }
+  }
+}

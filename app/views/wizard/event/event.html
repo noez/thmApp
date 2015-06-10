@@ -16,18 +16,22 @@
 
     <div class="templates" ng-show="templates.length > 0">
       <div th-carousel="carousel" th-source="templates" class="jcarousel-wrapper">
-        <div class="jcarousel">
+        <div class="jcarousel carousel-tpl">
           <ul>
-            <li ng-repeat="template in templates" ng-model="template">
-              <a ng-click="chooseTemplate(template)">
-                <img ng-src="{{template.timage}}" alt=""/>
+            <li ng-repeat="template in templates" class="carousel-tpl__item">
+              <a ng-click="chooseTemplate(template)" class="carousel-tpl__block">
+                <img ng-src="{{template.timage}}" alt="" class="carousel-tpl__image" />
               </a>
             </li>
           </ul>
         </div>
-        <div class="jcarousel-controls">
-          <button class="cta-btn" ng-click="carousel.prev()">Less</button>
-          <button class="cta-btn" ng-click="carousel.next()">More</button>
+        <div class="carousel-tpl__controls">
+          <button class="carousel-tpl__action carousel-tpl__action--prev" ng-click="carousel.prev()">
+          <i class="fa fa-long-arrow-left"></i>
+          </button>
+          <button class="carousel-tpl__action carousel-tpl__action--next" ng-click="carousel.next()">
+            <i class="fa fa-long-arrow-right"></i>
+          </button>
         </div>
       </div>
 

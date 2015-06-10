@@ -1,0 +1,33 @@
+.label-final {
+  position: relative;
+  height: 296px;
+  background: yellowgreen;
+}
+
+.label-template {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+}
+
+.label-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  @include element('image') {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+  }
+  @include element('mask') {
+    position: relative;
+    width: 400px;
+    height: 296px;
+    border: 1px solid black;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+}
