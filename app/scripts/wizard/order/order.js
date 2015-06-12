@@ -11,7 +11,7 @@ angular
     $stateProvider
       .state('wizard.order', {
         url: '/order',
-        templateUrl: 'views/wizard/order/order.html',
+        templateUrl: 'views/wizard/order.html',
         controller: 'OrderCtrl'
       });
     $urlRouterProvider.otherwise('/');
@@ -58,14 +58,23 @@ angular
       // validate product value
       if (!_.isEmpty(product)) {
         // fetch the price of the selected product
+        $scope.isValid = true;
         Price
           .get(product.id)
           .then(function(data) {
             $scope.productPrice = data[0];
+            $scope.priceTotal = $scope.qty * $scope.productPrice['price_excl_tax'];
           })
           .catch(function(err) {
             console.log(err);
           });
+      }
+    });
+
+    $scope.$watch('qty', function(newVal) {
+      if (!_.isUndefined(newVal) && !_.isUndefined($scope.productPrice)) {
+        $scope.qty = ( $scope.qty >= 1 )? newVal : defaultQty;
+        $scope.priceTotal = $scope.qty * $scope.productPrice['price_excl_tax'];
       }
     });
 
@@ -76,9 +85,11 @@ angular
         $scope.isValid = false;
       }
 
+
       if (!_.isNull($scope.product.id) && !_.isUndefined($scope.product.id)) {
         $scope.$storage.order.productId = $scope.product.id;
         $scope.$storage.order.qty = $scope.qty;
+        $scope.$storage.order.priceTotal = $scope.pricetTotal;
 
         // create the cyclye
         $scope.$storage.order.cycle = {

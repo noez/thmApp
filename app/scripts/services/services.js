@@ -9,9 +9,6 @@ angular
   .module('app.services', [])
   .constant('baseUrl', 'http://maravatio.haushaus.mx/dashboard/api/')
   .constant('token', 'Token 61e7de5eae825fe98dbb8e1ad714a97d4fc090f8')
-  //local constants
-  .constant('baseUrlLocal', 'http://192.168.1.14:8000/dashboard/api/')
-  .constant('tokenLocal', 'Token c4e913f4877e6762b8458b4d349ed402a5c3a842')
 /**
  * @ngdoc service
  * @name Types
@@ -21,8 +18,10 @@ angular
  */
 .factory('Types', ['$http', '$q', 'baseUrl', function($http, $q, baseUrl) {
   // Public API here
+
   return {
     getAll: function() {
+      $http.defaults.withCredentials = false;
       var defered = $q.defer(),
         promise = defered.promise,
         fragmentUrl = 'types/';
@@ -64,8 +63,10 @@ angular
  */
 .factory('Products', ['$http', '$q', 'baseUrl', function($http, $q, baseUrl) {
   // Public API here
+
   return {
     getAll: function(typeId) {
+      $http.defaults.withCredentials = false;
       var defered = $q.defer(),
         promise = defered.promise,
         fragmentUrl = '/products/';
@@ -107,8 +108,11 @@ angular
  */
 .factory('Price', ['$http', '$q', 'baseUrl', function($http, $q, baseUrl) {
   // Public API here
+
   return {
     get: function(productId) {
+      $http.defaults.withCredentials = false;
+
       var defered = $q.defer(),
         promise = defered.promise,
         fragmentUrl = 'products/';
@@ -135,8 +139,10 @@ angular
  */
 .factory('Event', ['$http', '$q', 'baseUrl', function($http, $q, baseUrl) {
   // Public API here
+
   return {
     get: function() {
+      $http.defaults.withCredentials = false;
       var defered = $q.defer(),
         promise = defered.promise,
         fragmentUrl = 'events/';
@@ -165,6 +171,7 @@ angular
   // Public API here
   return {
     get: function(eventId) {
+      $http.defaults.withCredentials = false;
       var defered = $q.defer(),
         promise = defered.promise,
         fragmentUrl = '/templates/';
@@ -189,19 +196,20 @@ angular
  * # UploadImage
  * Service in the app.services
  */
-.factory('UploadImage', ['$http', '$q', 'baseUrlLocal','tokenLocal', function($http, $q, baseUrlLocal, tokenLocal) {
+.factory('UploadImage', ['$http', '$q', 'baseUrl','token', function($http, $q, baseUrl, token) {
   // Public API here
   return {
     file: function(fd) {
+      $http.defaults.withCredentials = false;
       var defered = $q.defer(),
         promise = defered.promise,
         fragmentUrl = 'uploadimages/';
 
       $http
-        .post(baseUrlLocal + fragmentUrl, fd, {
+        .post(baseUrl + fragmentUrl, fd, {
           headers: {
             'Content-Type': undefined,
-            'Authorization': tokenLocal
+            'Authorization': token
           },
           transformRequest: angular.identify
         })
@@ -225,19 +233,19 @@ angular
  * Service in the app.services
  */
 
-.factory('UploadLabel', ['$http', '$q','baseUrlLocal', 'tokenLocal', function($http, $q, baseUrlLocal, tokenLocal){
+.factory('UploadLabel', ['$http', '$q','baseUrl', 'token', function($http, $q, baseUrl, token){
   return {
     send : function (data) {
-      console.log('sevice says ' + typeof data);
+      $http.defaults.withCredentials = false;
       var defered = $q.defer(),
         promise = defered.promise,
         fragmentUrl = 'labels/';
 
       $http
-        .post(baseUrlLocal + fragmentUrl, data , {
+        .post(baseUrl + fragmentUrl, data , {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': tokenLocal
+            'Authorization': token
           }
           //transformRequest: angular.identify
         })
@@ -284,8 +292,7 @@ angular
       $http
         .post(url, data , {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Cookie' : 'csrftoken=InJJliexGwdAyB1X5ZQwC32KNWLF20JE'
+            'Content-Type': 'application/x-www-form-urlencoded'
           },
           transformRequest: angular.identify
         })

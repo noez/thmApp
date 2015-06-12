@@ -10,13 +10,15 @@ angular
     $stateProvider
       .state('wizard.design', {
         url: '/design',
-        templateUrl: 'views/wizard/design/design.html',
+        templateUrl: 'views/wizard/design.html',
         controller: 'DesignCtrl'
       });
     $urlRouterProvider.otherwise('/');
   }])
-  .controller('DesignCtrl', ['$scope' ,'$sessionStorage', '$state','Products', 'UploadImage','Types', 'UploadLabel',function($scope, $sessionStorage,$state, Products, UploadImage, Types, UploadLabel){
+  .controller('DesignCtrl', ['$scope' ,'$sessionStorage', '$state','Products', 'UploadImage', 'UploadLabel', 'Matriz',function($scope, $sessionStorage,$state, Products, UploadImage, UploadLabel, Matriz){
     $scope.$storage = $sessionStorage;
+
+    $scope.matriz = Matriz;
 
     // this step is valid initialize = false
     $scope.isValid = false;
@@ -26,6 +28,8 @@ angular
     $scope.cycleIndex = $scope.$storage.order.cycle.index;
 
     // with the index found, access template label
+
+    console.log($scope.$storage.order.labels);
     $scope.template = $scope.$storage.order.labels[$scope.cycleIndex-1].template;
 
     // model label containing rendered in base64
@@ -42,6 +46,28 @@ angular
 
     };
 
+    $scope.fontStacks = [
+      {
+        "name" : "Arial",
+        "stack" : "sans-a"
+      },
+      {
+        "name" : "Times New Roman",
+        "stack" : "serif-a"
+      },
+      {
+        "name" : "Comic Sans MS",
+        "stack" : "sans-b"
+      },
+      {
+        "name" : "Georgia",
+        "stack" : "serif-b"
+      }
+    ];
+    $scope.matriz.firstTl = "Texto Primario";
+    $scope.matriz.secondTl = "Texto Secundario";
+    $scope.matriz.font = $scope.fontStacks[0];
+
     // disable the following steps
     for (var i = 0; i < $scope.$storage.steps.length; i++) {
       if( i > 3) {
@@ -55,6 +81,7 @@ angular
       console.log('etiqueta eliminada..sorry x(');
     }
 
+
     // watch the model changes
     $scope.$watch('labelRender', function(newVal) {
       if (!_.isUndefined(newVal) && !_.isNull(newVal)) {
@@ -66,6 +93,8 @@ angular
           label : $scope.labelRender,
           name : ''
         };
+
+        console.log(labelData);
 
         // send labe to the server
         UploadLabel
@@ -91,16 +120,6 @@ angular
       }
     });
 
-    // get the tag
-    Types
-      .getById( $scope.$storage.data.typeId)
-      .then(function( data ) {
-        $scope.type = data;
-      })
-      .catch(function (error){
-        console.log(error);
-      });
-
     // get the product
     Products.getById( $scope.$storage.order.productId )
       .then(function( data ) {
@@ -109,6 +128,8 @@ angular
       .catch(function (error){
         console.log(error);
       });
+
+
 
     // logic upload image
     $scope.uploadImage = function () {

@@ -9,21 +9,12 @@ angular.module('app.blocks', [])
 .directive('hsBackSlider', ['$timeout', function($timeout) {
   // Runs during compile
   return {
-    // name: '',
-    // priority: 1,
-    // terminal: true,
+
     scope: {
       source: '=',
       options: '='
-    }, // {} = isolate, true = child, false/undefined = no change
-    // controller: function($scope, $element, $attrs, $transclude) {},
-    // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
-    restrict: 'AE', // E = Element, A = evt, C = Class, M = Comment
-    // template: '',
-    // templateUrl: '',
-    //replace: true,
-    // transclude: true,
-    // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+    },
+    restrict: 'AE',
     link: function(scope, element, attrs) {
       var backslider = null,
         defaultOptions = {
@@ -173,25 +164,7 @@ angular.module('app.blocks', [])
       image: '=thImage'
     },
     restrict: 'E',
-    template: [
-      '<div class="tfm">',
-        '<div class="tfm-wrap">',
-          '<div class="tfm-area"></div>',
-          '<div class="tfm-inner">',
-            '<div class="tfm-container">',
-              '<div class="tfm-mask">',
-                '<img ng-src="{{ image.file}}" class="tfm-image">',
-              '</div>',
-              '<img ng-src="{{ image.file}}" class="tfm-image tfm-image-overlay">',
-            '</div>',
-          '</div>',
-      '</div>',
-      '<div class="tfm-range">',
-        '<div class="tfm-range-thumb"></div>',
-        '<div class="tfm-range-track"></div>',
-      '</div>',
-      '</div>'
-    ].join(''),
+    templateUrl : 'views/thtransform.tpl.html',
     replace: true,
     transclude: true,
     link: function(scope, element) {
@@ -208,7 +181,7 @@ angular.module('app.blocks', [])
           end: 'mouseup',
           move: 'mousemove'
         }),
-        scaleImage = 400 / 270,
+        scaleImage = 315/315,
 
         getPosition = function(evt) {
           var posX = 0,
@@ -537,6 +510,10 @@ angular.module('app.blocks', [])
           isInitialized = true;
         }
       });
+      scope.isVisible = true;
+      scope.toggleTransform = function () {
+        scope.isVisible = ! scope.isVisible;
+      }
     }
   };
 }])
@@ -552,45 +529,32 @@ angular.module('app.blocks', [])
       label : '=thLabel',
       build: '=thBuild'
     },
-    template: [
-      '<div class="label-image">',
-        '<div class="label-image__mask">',
-          '<img ng-src="{{ image.file }}" ng-style="matriz.transform" class="label-image__image">',
-        '</div>',
-      '</div>'
-    ].join(''),
-    // templateUrl: '',
+    templateUrl : 'views/thlabel.tpl.html',
     replace: true,
-    // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-    link: function(scope, element, attrs) {
+    link: function(scope, element) {
       scope.matriz = Matriz;
 
       var isInitialized = false,
       label = element.parent();
-      console.log(label);
       scope.$watch('image', function(newVal) {
         if (isInitialized) {
-          console.log('reloading label image..');
+          return;
         } else if (!_.isUndefined(newVal) && !_.isEmpty(newVal)) {
-          console.log('label image loaded...');
           isInitialized = true;
         }
       });
 
       scope.$watch('build', function(newVal) {
         if (newVal) {
-          console.log('renderizando al canvas...');
           html2canvas(label, {
             onrendered: function(canvas){
              scope.$apply(function() {
               scope.label = canvas.toDataURL();
-              console.log(typeof scope.label);
              });
             }
           });
         }
       });
-
     }
   };
 }]);

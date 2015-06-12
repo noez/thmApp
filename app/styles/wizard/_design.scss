@@ -1,7 +1,75 @@
+.design {
+  .layout__col--left {
+    position: relative;
+    width: 340px;
+  }
+  .layout__col--right {
+    padding: 2em;
+    float: right;
+    width: calc(100% - 340px);
+  }
+}
+.design-upload-image {
+  margin-bottom: 2.5em;
+}
 .label-final {
   position: relative;
-  height: 296px;
-  background: yellowgreen;
+  width: 314px;
+  height: 600px;
+  overflow: hidden;
+  background: greenyellow;
+  @include element('base') {
+    position: absolute;
+    top: 0;
+    z-index: 10;
+  }
+  @include element('image') {
+    position: absolute;
+    bottom: 140px;
+    width: 315px;
+    height: 223px;
+    overflow: hidden;
+    z-index: 20;
+  }
+  @include element('mask') {
+      position: relative;
+      width: 315px;
+      height: 223px;
+      overflow: hidden;
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+   }
+   @include element('template') {
+    position: absolute;
+    bottom: 140px;
+    width: 315px;
+    height: 224px;
+    z-index: 40;
+  }
+  @include element('txt') {
+    position: absolute;
+    height: 48px;
+    z-index: 40;
+    width: 278px;
+    word-wrap: break-word;
+    color: white;
+    margin: 0 18px;
+    display: block;
+    text-align: center;
+    span {
+      font-size: 18px;
+      color: white;
+    }
+    @include modifier('first') {
+      top: 186px;
+    }
+    @include modifier('second') {
+      bottom: 78px;
+    }
+  }
 }
 
 .label-template {
@@ -30,4 +98,66 @@
     margin: 0 auto;
     overflow: hidden;
   }
+}
+.design-filters {
+  margin-bottom: 2.5em;
+}
+.filter-list {
+  display: table;
+  width: 100%;
+  text-align: center;
+  @include element('item') {
+    display: table-cell;
+    padding: 1em;
+    text-align: center;
+    border-right: 1px solid color('white','shade');
+    background: color('white','tint');
+  }
+  @include element('name') {
+    display: inline-block;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: bold;
+    input {
+      margin-right: 0.5em;
+    }
+  }
+
+}
+
+.filter-bn {
+  filter: grayscale(100%);
+  filter: url(#greyscale);
+  filter: gray;
+}
+
+.filter-sepia {
+  filter: url(sepia.svg#old-timey);
+  filter: sepia(100%);
+  background-color: #5E2612;
+  filter: alpha(opacity=50);
+  zoom: 1;
+}
+
+
+.ff-stack.serif-a {
+  font-family: "Times New Roman", Times, serif;
+}
+.ff-stack.serif-b {
+  font-family: Georgia, serif;
+}
+.ff-stack.sans-a {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.ff-stack.sans-b {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.ff-stack.sans-c {
+  font-family: Impact, Charcoal, sans-serif;
+}
+
+
+.design-texts {
+  margin-bottom: 2.5em;
 }

@@ -11,7 +11,7 @@ angular
     $stateProvider
       .state('wizard.event', {
         url: '/event',
-        templateUrl: 'views/wizard/event/event.html',
+        templateUrl: 'views/wizard/event.html',
         controller: 'EventCtrl'
       });
     $urlRouterProvider.otherwise('/');

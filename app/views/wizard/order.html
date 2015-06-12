@@ -1,0 +1,61 @@
+<!-- Layout Body -->
+<div class="layout__body">
+  <h1 class="layout__title">
+    Elije el tamaño de tu botella y numero de cajas.
+  </h1>
+  <div class="layout__col layout__col--left">
+    <div class="type">
+      <div class="type__body">
+        <figure class="text-center">
+          <img src="images/ghots-bottle.png" alt="" height="500" ng-show="!product.img_zoom_size">
+          <img ng-src="{{ product.img_zoom_size }}" height="500">
+        </figure>
+      </div>
+    </div>
+  </div>
+  <div class="layout__col">
+    <div class="order">
+      <header class="order__header">
+        <h1 class="order__product-tl" ng-bind="product.title"></h1>
+        <p class="order__product-txt" ng-bind-html="product.description"></p>
+        <hr>
+      </header>
+      <div class="order__product-size">
+        <label class="product-size-label">Presentación</label>
+        <select ng-model="product"
+                ng-options="product as product.bottlesize for product in products | orderBy:'id'"
+                class="form-control product-size-select">
+          <option value="">Seleccione</option>
+        </select>
+        <div class="order__rules" ng-show="product.id">
+          <hr>
+          <label>Detalles del producto</label>
+          <ul class="list-unstyled details">
+            <li class="details__item">
+              <span>Botellas por caja</span>
+              <span class="details__higtlight">{{ product.bottles }}</span>
+            </li>
+            <li class="details__item">
+              <span>Etiquetas personalizables por caja</span>
+              <span class="details__higtlight">{{ product.maxlabels }}</span>
+            </li>
+          </ul>
+        </div>
+        <footer class="order__footer">
+          <div class="order__qty">
+            <hr>
+            <label>Numero de cajas</label>
+            <input type="text" class="form-control product-qty" ng-model="qty" name="box"/>
+          </div>
+          <hr>
+          <span>
+            <label>Precio</label>
+            <span class="product-price">$ {{ priceTotal }}  {{ productPrice.price_currency }}</span>
+          </span>
+          <hr>
+        </footer>
+        <button class="btn btn-primary" ng-disabled="!isValid" ng-click="saveOrder()">Siguiente</button>
+      </div>
+    </div>
+  </div>
+</div>

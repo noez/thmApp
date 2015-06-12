@@ -15,7 +15,4 @@ angular
     'app.services',
     'app.wizard',
     'app.home'
-  ])
-  .run(['$cookies', function($cookies){
-    $cookies.put('csrftoken','04Hf9gX4VJVzAKMvIzpd6noFdO4Wszgp');
-  }]);
+  ]);

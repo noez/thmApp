@@ -9,7 +9,7 @@ angular.module('app.wizard.type', [])
     $stateProvider
       .state('wizard.type', {
         url: '/type',
-        templateUrl: 'views/wizard/type/type.html',
+        templateUrl: 'views/wizard/type.html',
         controller: 'TypeCtrl'
       });
     $urlRouterProvider.otherwise('/');
@@ -52,7 +52,6 @@ angular.module('app.wizard.type', [])
 
     // when tequila is chosen, you must be assigned.
     $scope.selected = function(type) {
-      console.log(type);
       // assigns the selected tequila
       $scope.typeSelected = type;
       $scope.typeId = type.id;

@@ -1,0 +1,34 @@
+<div class="layout__body">
+  <h1 class="layout__title">
+    Resumen
+  </h1>
+  <div class="layout__col layout__col--wide">
+    <div class="summary text-center">
+      <h3 class="summary-noty">Verifica los detalles de tu pedido.</h3>
+      <p ng-show="isValid">
+        LLevas <strong class="text-success">{{ currentLabels }}</strong> etiqueta(s) de <strong class="text-danger">{{ maxLabels }}</strong> , puedes seguir personalizando o bien puedes aplicar el diseño 1 a todas tus etiquetas.
+      </p>
+      <p ng-show="!isValid" class="bg-success">
+        Haz completado la cantidad de etiquetas disponibles, puede pasar a pagar
+      </p>
+      <p ng-show="isValid">
+        Si eliges aplicar el diseño puede ya dar clic en pasar a pagar.
+      </p>
+
+      <div class="sumary__body">
+        <h4 class="summary-noty text-center">Previa de Etiquetas</h4>
+        <ul class="list-unstyled tags-prev">
+          <li ng-repeat="label in labels">
+            <img ng-src="{{ label.processedLabel.label }}" alt="" height="300">
+          </li>
+        </ul>
+      </div>
+
+      <button class="btn btn-primary"  ng-disabled="!isAllowed" ng-click="continueDesigning()">Continuar personalizando </button>
+      <button class="btn btn-primary" ng-click="checkout()">Pasar a pagar</button>
+    </div>
+  </div>
+
+</div>
+
+

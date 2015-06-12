@@ -1,0 +1,44 @@
+<div class="layout__body">
+  <h1 class="layout__title">
+    ¿Qué estamos celebrando?
+  </h1>
+  <div class="layout__col layout__col--wide layout__col--header">
+    <div class="event">
+      <header class="event__header">
+        <div class="event__type">
+          <label for="event_type">Tipo de Evento</label>
+          <select name="event_type"
+            id="event_type"
+            ng-options="event as event.name for event in events | orderBy:'name'"
+            ng-model="event" ng-change="getTemplates(event.id)"
+            class="form-control">
+            <option value="">Seleccione</option>
+          </select>
+        </div>
+      </header>
+      <hr>
+    </div>
+    <div class="templates" ng-show="templates.length > 0">
+      <label>Selecciona la plantilla que más te guste</label>
+      <div th-carousel="carousel" th-source="templates" class="jcarousel-wrapper">
+        <div class="jcarousel carousel-tpl">
+          <ul>
+            <li ng-repeat="template in templates" class="carousel-tpl__item">
+              <a ng-click="chooseTemplate(template)" class="carousel-tpl__block">
+                <img ng-src="{{template.timage}}" alt="" class="carousel-tpl__image" width="237" />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="templates__controls">
+        <button class="templates__action templates__action--prev" ng-click="carousel.prev()">
+        <i class="fa fa-long-arrow-left"></i>
+        </button>
+        <button class="templates__action templates__action--next" ng-click="carousel.next()">
+          <i class="fa fa-long-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

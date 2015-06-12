@@ -1,0 +1,28 @@
+<div class="tfm-wrap">
+  <span ng-click="toggleTransform()" class="tfm-toggle">
+      <span>Mostrar/Ocultar</span>
+      <i class="fa fa-eye"></i>
+  </span>
+  <label>2. Arrastra para mover la imagen  </label>
+  <div class="tfm" ng-hide="!isVisible">
+
+    <div class="tfm-wrap" >
+      <div class="tfm-area"></div>
+      <div class="tfm-inner">
+        <div class="tfm-container">
+          <div class="tfm-mask">
+            <img ng-src="{{ image.file}}" class="tfm-image">
+          </div>
+          <img ng-src="{{ image.file}}" class="tfm-image tfm-image-overlay">
+        </div>
+      </div>
+    </div>
+    <label>2.1 Aumenta o Reduce el tamaño de la imagen </label>
+
+    <div class="tfm-range">
+      <div class="tfm-range-thumb"></div>
+      <div class="tfm-range-track"></div>
+    </div>
+  </div>
+</div>
+

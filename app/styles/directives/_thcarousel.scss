@@ -20,21 +20,16 @@
   }
 }
 .jcarousel-wrapper {
-  width: 816px;
-  margin: 2em auto;
   position: relative;
+  margin: 2em 0;
 }
 .carousel-tpl
 {
-  width: 680px;
+  width: 538px;
   margin: 0 auto;
   position: relative;
   z-index: 30;
 
-  @include element('item')
-  {
-
-  }
   @include element('block')
   {
     display: block;
@@ -47,11 +42,17 @@
       border-color: color('gold');
     }
   }
+}
 
+.templates {
+  position: relative;
+  width: 690px;
+  margin: 2em auto;
+  text-align: center;
   @include element('controls') {
     position: absolute;
     height: 40px;
-    top: 40px;
+    top: 130px;
     width: 100%;
     z-index: 10;
   }
@@ -60,7 +61,7 @@
   {
     line-height: 60px;
     font-size: 18px;
-    color: color('gold');
+    color: color('white');
 
     display: block;
     position: absolute;
@@ -69,12 +70,12 @@
     width: 60px;
     height: 60px;
 
-    background: transparent;
-    border: 1px solid color('gold');
+    background: color('gold');
+    border: 0;
     border-radius: 50%;
     &:hover {
       color: white;
-      background-color: color('gold');
+      background-color: color('gold','tint');
     }
     @include modifier('next')
     {
