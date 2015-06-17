@@ -62,8 +62,7 @@ angular
 
     $scope.chooseTemplate = function (template) {
       var round = {
-        template : template,
-        headlines: []
+        template : template
       };
 
       $scope.$storage.order.labels.push(round);

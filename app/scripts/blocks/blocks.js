@@ -304,8 +304,9 @@ angular.module('app.blocks', [])
 
         },
         scale: function(range){
+          console.log(range);
           var self = this,
-            nw = clamp( ( range.value * self.imgRect.width )  , self.imgRect.width, ( self.imgRect.width * range.max )),
+            nw = range.value * self.imgRect.width, //clamp( ( range.value * self.imgRect.width )  , self.imgRect.width, ( self.imgRect.width * range.max )),
             nh = nw * self.imgRect.height / self.imgRect.width,
             ot = self.vector.imgInit.y,
             ol = self.vector.imgInit.x,
@@ -313,8 +314,8 @@ angular.module('app.blocks', [])
             nt = s * ot + (1 - s) * self.dragMask.outerHeight(true) / 2,
             nl = s * ol + (1 - s) * self.dragMask.outerWidth(true) / 2;
 
-            nt = clamp( nt , self.dragMask.outerHeight(true) - nh, 0);
-            nl = clamp( nl , self.dragMask.outerWidth(true) - nw, 0);
+            //nt = clamp( nt , self.dragMask.outerHeight(true) - nh, 0);
+            //nl = clamp( nl , self.dragMask.outerWidth(true) - nw, 0);
 
             self.dragImage.css({
               width : nw,
@@ -373,10 +374,12 @@ angular.module('app.blocks', [])
           var
             mouse = getPosition(evt),
             bound = {
-              top: transform.dragMask.outerHeight() - transform.dragImage.height(),
-              left : transform.dragMask.outerWidth() - transform.dragImage.width(),
-              right : 0,
-              bottom : 0
+              //top: transform.dragMask.outerHeight() - transform.dragImage.height(),
+              top: -transform.dragImage.height(),
+              //left : transform.dragMask.outerWidth() - transform.dragImage.width(),
+              left : - transform.dragImage.width(),
+              right : transform.dragMask.outerWidth(),
+              bottom : transform.dragMask.outerHeight()
             };
 
             transform.vector.current.x = mouse.x;
@@ -420,7 +423,7 @@ angular.module('app.blocks', [])
           var self = this;
           // settings default
           self.data = {
-            min: 1,
+            min: 1/3,
             max : 3,
             value : 1,
             lastValue : 1
@@ -440,10 +443,12 @@ angular.module('app.blocks', [])
           self.thumb = element.find('.tfm-range-thumb');
           self.track = element.find('.tfm-range-track');
 
+          var left = ( ( self.track.width() - self.thumb.width() ) /( self.data.max - self.data.min )   * (self.data.value - self.data.min ) );
+          console.log(left);
           // reset styles
           self.thumb.css({
             top: 0,
-            left: 0
+            left: left
           });
 
           // reset default values

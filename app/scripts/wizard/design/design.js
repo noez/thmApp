@@ -75,6 +75,11 @@ angular
       }
     }
 
+    if (_.has($scope.$storage.order.labels[$scope.cycleIndex-1], 'uploadImage')) {
+      $scope.imageUploaded = $scope.$storage.order.labels[$scope.$storage.order.cycle.index - 1].uploadImage;
+      $scope.labelImage = $scope.$storage.order.labels[$scope.$storage.order.cycle.index - 1].uploadImage;
+    }
+
     // if a processed tag exists, delete it
     if( _.has($scope.$storage.order.labels[$scope.cycleIndex-1] , 'processedLabel')) {
       delete $scope.$storage.order.labels[$scope.cycleIndex-1].processedLabel;
@@ -143,8 +148,10 @@ angular
         UploadImage
           .file(fd)
           .then(function(data) {
-            $scope.uploadImage = data;
-            $scope.labelImage = data;
+            $scope.$storage.order.labels[$scope.$storage.order.cycle.index - 1].uploadImage = data;
+            $scope.imageUploaded = $scope.$storage.order.labels[$scope.$storage.order.cycle.index - 1].uploadImage;
+            $scope.labelImage = $scope.$storage.order.labels[$scope.$storage.order.cycle.index - 1].uploadImage;
+
           })
           .catch(function (err) {
             console.log(err);

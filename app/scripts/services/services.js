@@ -282,7 +282,7 @@ angular
  * Service in the app.services
  */
 .factory('Oscar', ['$http',  '$q', function($http,  $q){
-  $http.defaults.withCredentials = true;
+  $http.defaults.withCredentials = false;
   return {
     send : function (url, data) {
       console.log('sevice says ' + typeof data);
